@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "714080369658",
+    "firebase_url": "https://busshuttle-48ae5.firebaseio.com",
+    "project_id": "busshuttle-48ae5",
+    "storage_bucket": "busshuttle-48ae5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:714080369658:android:756e8621a9f079664a4243",
+        "android_client_info": {
+          "package_name": "com.creditcoder.shuttlebus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "714080369658-dt54t4e8kb78ovkmvvonuv39vd9ku00n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.creditcoder.shuttlebus",
+            "certificate_hash": "bebccff4051bd5c975dd1fc9692aa0b32d9b5afe"
+          }
+        },
+        {
+          "client_id": "714080369658-rai96160i6k449792o9i2v8ctjmjakpf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFVfLE5EjMAkPiXxshhWCl2dc2CP2k-pU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "714080369658-rai96160i6k449792o9i2v8ctjmjakpf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
