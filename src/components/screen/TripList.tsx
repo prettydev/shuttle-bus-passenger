@@ -1,7 +1,9 @@
 import Button from '../shared/Button';
 import { DefaultNavigationProps } from '../../types';
 import React from 'react';
+import { Text } from 'react-native';
 import styled from 'styled-components/native';
+import { useAppContext } from '../../providers/AppProvider';
 
 const Container = styled.View`
   flex: 1;
@@ -12,12 +14,19 @@ const Container = styled.View`
 `;
 
 interface Props {
-  navigation: DefaultNavigationProps<'Temp'>;
+  navigation: DefaultNavigationProps<'Home'>;
 }
 
 function Page(props: Props): React.ReactElement {
+  const {
+    state: { user, booking },
+    setUser,
+    setTrip,
+  } = useAppContext();
+
   return (
     <Container>
+      <Text>{user ? user.userId : ''}</Text>
       <Button
         testID="btn"
         onClick={(): void => props.navigation.goBack()}

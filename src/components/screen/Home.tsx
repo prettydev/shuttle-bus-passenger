@@ -44,12 +44,16 @@ const StyledText = styled.Text`
 `;
 
 interface Props {
-  navigation: DefaultNavigationProps<'Intro'>;
+  navigation: DefaultNavigationProps<'Home'>;
 }
 
-function Intro(props: Props): React.ReactElement {
+function Page(props: Props): React.ReactElement {
   let timer: number;
-  const { state: { user }, setUser } = useAppContext();
+  const {
+    state: { user, booking },
+    setUser,
+    setTrip,
+  } = useAppContext();
   const { changeThemeType } = useThemeContext();
   const [isLoggingIn, setIsLoggingIn] = React.useState<boolean>(false);
 
@@ -57,9 +61,8 @@ function Intro(props: Props): React.ReactElement {
     setIsLoggingIn(true);
     timer = setTimeout(() => {
       const user: User = {
-        displayName: 'shuttle bus',
-        age: 30,
-        job: 'developer',
+        userId: 'ooo',
+        name: 'shuttle bus',
       };
       setUser(user);
       setIsLoggingIn(false);
@@ -75,10 +78,10 @@ function Intro(props: Props): React.ReactElement {
             marginTop: 100,
           }}
         >
-          {user ? user.displayName : ''}
+          {user ? user.userId : ''}
         </StyledText>
-        <StyledText>{user ? user.age : ''}</StyledText>
-        <StyledText>{user ? user.job : ''}</StyledText>
+        <StyledText>{user ? user.name : ''}</StyledText>
+        <StyledText>{'eeeeeeeeeeeeeeeeeeeeeeeeeee'}</StyledText>
       </ContentWrapper>
       <ButtonWrapper>
         <Button
@@ -91,7 +94,13 @@ function Intro(props: Props): React.ReactElement {
         <View style={{ marginTop: 8 }} />
         <Button
           testID="btn2"
-          onClick={(): void => props.navigation.navigate('Temp')}
+          onClick={(): void => props.navigation.navigate('TripList')}
+          text={getString('NAVIGATE', {})}
+        />
+        <View style={{ marginTop: 8 }} />
+        <Button
+          testID="btn3"
+          onClick={(): void => props.navigation.navigate('BookingList')}
           text={getString('NAVIGATE', {})}
         />
         <View style={{ marginTop: 8 }} />
@@ -105,4 +114,4 @@ function Intro(props: Props): React.ReactElement {
   );
 }
 
-export default Intro;
+export default Page;

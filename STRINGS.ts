@@ -2,7 +2,6 @@ import * as Localization from 'react-native-localize';
 
 import en from './assets/langs/en.json';
 import i18n from 'i18n-js';
-import ko from './assets/langs/ko.json';
 
 const locales = Localization.getLocales();
 
@@ -11,7 +10,7 @@ if (Array.isArray(locales)) {
 }
 
 i18n.fallbacks = true;
-i18n.translations = { en, ko };
+i18n.translations = { en };
 
 export const getString = (param: string, mapObj?: object): string => {
   if (mapObj) {
