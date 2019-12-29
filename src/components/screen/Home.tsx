@@ -51,24 +51,9 @@ function Page(props: Props): React.ReactElement {
   let timer: number;
   const {
     state: { user, booking },
-    setUser,
-    setTrip,
   } = useAppContext();
-  const { changeThemeType } = useThemeContext();
-  const [isLoggingIn, setIsLoggingIn] = React.useState<boolean>(false);
 
-  const onLogin = (): void => {
-    setIsLoggingIn(true);
-    timer = setTimeout(() => {
-      const user: User = {
-        userId: 'ooo',
-        name: 'shuttle bus',
-      };
-      setUser(user);
-      setIsLoggingIn(false);
-      clearTimeout(timer);
-    }, 1000);
-  };
+  const { changeThemeType } = useThemeContext();
 
   return (
     <Container>
@@ -82,16 +67,15 @@ function Page(props: Props): React.ReactElement {
         </StyledText>
         <StyledText>{user ? user.name : ''}</StyledText>
         <StyledText>{'eeeeeeeeeeeeeeeeeeeeeeeeeee'}</StyledText>
+        <StyledText>{booking?.rider ? booking.rider.riderName : ''}</StyledText>
+        <StyledText>
+          {booking?.rider ? booking.rider.riderEmail : ''}
+        </StyledText>
+        <StyledText>
+          {booking?.rider ? booking.rider.riderPhone : ''}
+        </StyledText>
       </ContentWrapper>
       <ButtonWrapper>
-        <Button
-          testID="btn1"
-          imgLeftSrc={IC_MASK}
-          isLoading={isLoggingIn}
-          onClick={(): void => onLogin()}
-          text={getString('LOGIN')}
-        />
-        <View style={{ marginTop: 8 }} />
         <Button
           testID="btn2"
           onClick={(): void => props.navigation.navigate('TripList')}

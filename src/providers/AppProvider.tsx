@@ -64,7 +64,7 @@ const initialState: State = {
   user: { userId: 'ccccc', name: 'dddd' },
   booking: {
     trip: {
-      tripId: 'ffffffffffffffffff',
+      tripId: '',
       tripAlias: '',
     },
     rider: {
@@ -355,7 +355,7 @@ const bookingReducer: BookingReducer = (
 ) => {
   switch (action.type) {
     case 'set-trip':
-      return { ...state, booking: action.payload };
+      return { ...state, trip: action.payload };
     case 'set-rider':
       return { ...state, rider: action.payload };
     case 'set-driver':

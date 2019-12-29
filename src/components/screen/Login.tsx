@@ -1,12 +1,18 @@
 import * as Yup from 'yup';
-import { Block, Input, Text } from 'galio-framework';
-import { Button, StyleSheet, View } from 'react-native';
-import { DefaultNavigationProps, User } from '../../types';
+import { Block, Button, Input, Text } from 'galio-framework';
+import { DefaultNavigationProps, Rider, User } from '../../types';
 import React, { ReactElement, useEffect, useState } from 'react';
-import { loginWithEmail, signupWithEmail } from '../../apis/firebase';
+import { StyleSheet, View } from 'react-native';
+
+import {
+  getRiderDetails,
+  loginWithEmail,
+  signupWithEmail,
+} from '../../apis/firebase';
 import AppLogo from '../shared/AppLogo';
 
 import { getString } from '../../../STRINGS';
+import { useAppContext } from '../../providers/AppProvider';
 import { useForm } from 'react-hook-form';
 
 interface Props {
@@ -25,6 +31,12 @@ const validationSchema = Yup.object().shape({
 });
 
 function Page(props: Props): ReactElement {
+  const {
+    state: { user, booking },
+    setUser,
+    setRider,
+  } = useAppContext();
+
   const goToSignup = (): void => props.navigation.navigate('Register');
   const goToForgotPassword = (): void =>
     props.navigation.navigate('ForgotPassword');
@@ -40,27 +52,55 @@ function Page(props: Props): ReactElement {
     try {
       const userCredential = await loginWithEmail(email, password);
 
-      console.log('ghhhhhhhhhhhhhhhhhhhhhhh', userCredential);
+      console.log('ghhhhhhhhhhhhhhhhhhhhhhh================', userCredential);
 
-      // if (userCredential.user) {
-      //   await firebase.getRiderDetails(
-      //     userCredential.user.uid,
-      //     props.navigation.navigate('App'),
-      //   );
-      // }
+      if (userCredential.user) {
+        getRiderDetails(userCredential.user.uid, (res) => {
+          console.log('ccccccccccccccccccccc================', res.id);
+          console.log('jjjjjjjjjjjjjjjjjjjjjjjjjj================', res.data());
+
+          if (res.data()) {
+            const user: User = {
+              userId: res.id,
+              name: res.data().name,
+            };
+            setUser(user);
+
+            const rider: Rider = {
+              riderId: res.id,
+              riderName: res.data().name,
+              riderEmail: res.data().email,
+              riderPhone: res.data().phone,
+            };
+            setRider(rider);
+
+            props.navigation.navigate('App');
+          } else {
+            props.navigation.navigate('Auth');
+          }
+        });
+      }
       // {
-      //   "additionalUserInfo": {"isNewUser": false},
-      //   "user": {
-      //       "displayName": null,
-      //       "email": "cba@aa.com",
-      //       "emailVerified": false,
-      //       "isAnonymous": false,
-      //       "metadata": [Object],
-      //       "phoneNumber": null,
-      //       "photoURL": null,
-      //       "providerData": [Array],
-      //       "providerId": "firebase",
-      //       "uid": "iES9ff9HksWE6kIJHpHqlla4Df42"
+
+      //   {
+      //     "additionalUserInfo": {"isNewUser": false, "providerId": "password"},
+      //     "credential": null, "operationType": "signIn",
+      //     "user": {"apiKey": "AIzaSyCmmiyeaqjo86zIwvy0TdFFaNwlmEYkn3o",
+      //                 "appName": "[DEFAULT]",
+      //                 "authDomain": "busshuttle-48ae5.firebaseapp.com",
+      //                 "createdAt": "1577175313362",
+      //                 "displayName": null,
+      //                 "email": "a@aa.com",
+      //                 "emailVerified": false,
+      //                 "isAnonymous": false,
+      //                 "lastLoginAt": "1577588420047",
+      //                 "phoneNumber": null,
+      //                 "photoURL": null,
+      //                 "providerData": [Array],
+      //                 "redirectEventId": null,
+      //                 "stsTokenManager": [Object],
+      //                 "tenantId": null,
+      //                 "uid": "QWKJVrRstygWRoMPnWvlLxanV3C3"
       //     }
       // }
     } catch (e) {
@@ -94,7 +134,7 @@ function Page(props: Props): ReactElement {
       />
       {errors.password && <Text>Password is required.</Text>}
 
-      <Button onPress={handleSubmit(onSubmit)} title={getString('LOGIN')} />
+      <Button onPress={handleSubmit(onSubmit)}>{getString('LOGIN')}</Button>
     </Block>
   );
 }
