@@ -66,7 +66,6 @@ function Page(props: Props): React.ReactElement {
           {user ? user.userId : ''}
         </StyledText>
         <StyledText>{user ? user.name : ''}</StyledText>
-        <StyledText>{'eeeeeeeeeeeeeeeeeeeeeeeeeee'}</StyledText>
         <StyledText>{booking?.rider ? booking.rider.riderName : ''}</StyledText>
         <StyledText>
           {booking?.rider ? booking.rider.riderEmail : ''}

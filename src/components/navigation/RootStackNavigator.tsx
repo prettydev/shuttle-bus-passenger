@@ -1,6 +1,7 @@
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import AuthCheck from '../screen/AuthCheck';
 import BookingList from '../screen/BookingList';
+import DropoffMap from '../screen/DropoffMap';
 import Home from '../screen/Home';
 import Login from '../screen/Login';
 import PickupMap from '../screen/PickupMap';
@@ -15,6 +16,7 @@ const TripStack = createStackNavigator({
   TripList: TripList,
   TripDetails: TripDetails,
   PickupMap: PickupMap,
+  DropoffMap: DropoffMap,
 });
 
 const AppStack = createBottomTabNavigator({

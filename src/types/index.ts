@@ -129,11 +129,79 @@ export interface Seats {
   N4: Seat;
 }
 
+const initSeat = {
+  seatId: '',
+  seatState: 0,
+  active: true,
+};
+
+export const initSeats = {
+  A1: initSeat,
+  A2: initSeat,
+  A3: initSeat,
+  A4: initSeat,
+  B1: initSeat,
+  B2: initSeat,
+  B3: initSeat,
+  B4: initSeat,
+  C1: initSeat,
+  C2: initSeat,
+  C3: initSeat,
+  C4: initSeat,
+  D1: initSeat,
+  D2: initSeat,
+  D3: initSeat,
+  D4: initSeat,
+  E1: initSeat,
+  E2: initSeat,
+  E3: initSeat,
+  E4: initSeat,
+  F1: initSeat,
+  F2: initSeat,
+  F3: initSeat,
+  F4: initSeat,
+  G1: initSeat,
+  G2: initSeat,
+  G3: initSeat,
+  G4: initSeat,
+  H1: initSeat,
+  H2: initSeat,
+  H3: initSeat,
+  H4: initSeat,
+  I1: initSeat,
+  I2: initSeat,
+  I3: initSeat,
+  I4: initSeat,
+  J1: initSeat,
+  J2: initSeat,
+  J3: initSeat,
+  J4: initSeat,
+  K1: initSeat,
+  K2: initSeat,
+  K3: initSeat,
+  K4: initSeat,
+  L1: initSeat,
+  L2: initSeat,
+  L3: initSeat,
+  L4: initSeat,
+  M1: initSeat,
+  M2: initSeat,
+  M3: initSeat,
+  M4: initSeat,
+  N1: initSeat,
+  N2: initSeat,
+  N3: initSeat,
+  N4: initSeat,
+};
+
 type StackParamList = {
   default: undefined;
   Home: { userId: string };
   Login: undefined;
   TripList: undefined;
+  TripDetails: undefined;
+  PickupMap: undefined;
+  DropoffMap: undefined;
   BookingList: undefined;
 };
 

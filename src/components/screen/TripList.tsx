@@ -4,9 +4,9 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import { Block, Button, Card, Text, theme } from 'galio-framework';
+import { Block, Card, theme } from 'galio-framework';
 import { DefaultNavigationProps, Trip } from '../../types';
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { getTrips } from '../../apis/firebase';
 import { useAppContext } from '../../providers/AppProvider';
 
@@ -15,21 +15,27 @@ interface Props {
 }
 
 const { width } = Dimensions.get('screen');
-const thumbMeasure = (width - 48 - 32) / 3;
-const cardWidth = width - theme.SIZES.BASE * 2;
+interface TripItem {
+  key: string;
+  driverId: string;
+  vehicleId: string;
+  alias: string;
+  departureDatetime: string;
+  departureAddress: string;
+  destinationAddress: string;
+  estimatedArrivalTime: string;
+}
 
 function Page(props: Props): React.ReactElement {
-  const {
-    state: { booking },
-    setTrip,
-  } = useAppContext();
+  const { setTrip } = useAppContext();
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [trips, setTrips] = useState([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const [trips, setTrips] = useState<TripItem[]>();
 
   useEffect(() => {
     getTrips((res) => {
-      const list = [];
+      const list: TripItem[] = [];
       res.forEach((doc) => {
         const {
           alias,
@@ -42,14 +48,13 @@ function Page(props: Props): React.ReactElement {
         } = doc.data();
         list.push({
           key: doc.id,
-          doc, // DocumentSnapshot
-          driverId,
-          vehicleId,
           alias,
           departureDatetime,
           departureAddress,
           destinationAddress,
           estimatedArrivalTime,
+          driverId,
+          vehicleId,
         });
       });
 
@@ -58,39 +63,34 @@ function Page(props: Props): React.ReactElement {
     });
   });
 
-  const renderList = (): void => {
+  const renderList = (): ReactElement => {
     return (
       <Block flex>
-        {trips.map((doc, i) => (
-          <TouchableOpacity
-            key={i}
-            onPress={(): void => {
-              const trip: Trip = {
-                tripId: doc.key,
-                tripAlias: doc.alias,
-              };
-              setTrip(trip);
+        {trips &&
+          trips.map((doc, i) => (
+            <TouchableOpacity
+              key={i}
+              onPress={(): void => {
+                const trip: Trip = {
+                  tripId: doc.key,
+                  tripAlias: doc.alias,
+                };
+                setTrip(trip);
 
-              console.log(
-                'feeeeeeeeeeeeee==',
-                booking.trip.tripId,
-                booking.trip.tripAlias,
-              );
-
-              props.navigation.navigate('TripDetails');
-            }}
-          >
-            <Card
-              flex
-              shadow
-              borderless
-              title={doc.alias}
-              caption={doc.departureDatetime}
-              avatar="http://i.pravatar.cc/100?id=skater"
-              style={{ width: width - theme.SIZES.BASE * 2 }}
-            />
-          </TouchableOpacity>
-        ))}
+                props.navigation.navigate('TripDetails');
+              }}
+            >
+              <Card
+                flex
+                shadow
+                borderless
+                title={doc.alias}
+                caption={doc.departureDatetime}
+                avatar="http://i.pravatar.cc/100?id=skater"
+                style={{ width: width - theme.SIZES.BASE * 2 }}
+              />
+            </TouchableOpacity>
+          ))}
       </Block>
     );
   };

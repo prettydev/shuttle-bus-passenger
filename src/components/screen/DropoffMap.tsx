@@ -1,12 +1,11 @@
 import { Block, Button, Card, Text, theme } from 'galio-framework';
-import { DefaultNavigationProps, Pickup } from '../../types';
+import { DefaultNavigationProps, Dropoff } from '../../types';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import React, { useEffect, useState } from 'react';
 import Geolocation from 'react-native-geolocation-service';
 import PrevNextButtons from '../shared/PrevNextButtons';
 import Styled from 'styled-components/native';
 import { useAppContext } from '../../providers/AppProvider';
-import { getBookings } from '../../apis/firebase';
 
 interface Props {
   navigation: DefaultNavigationProps<'Home'>;
@@ -35,7 +34,7 @@ const initialLoc = {
 function Page(props: Props): React.ReactElement {
   const {
     state: { booking },
-    setPickup,
+    setDropoff,
   } = useAppContext();
 
   const [location, setLocation] = useState<ILocation | undefined>(initialLoc);
@@ -60,12 +59,12 @@ function Page(props: Props): React.ReactElement {
     const { coordinate } = e.nativeEvent;
     setLocation(coordinate);
 
-    const pickup: Pickup = {
-      pickupAddress: '',
-      pickupLatitude: coordinate.latitude,
-      pickupLongitude: coordinate.longitude,
+    const dropoff: Dropoff = {
+      dropoffAddress: '',
+      dropoffLatitude: coordinate.latitude,
+      dropoffLongitude: coordinate.longitude,
     };
-    setPickup(pickup);
+    setDropoff(dropoff);
   };
 
   const onDragStart = (e): void => {
@@ -75,10 +74,15 @@ function Page(props: Props): React.ReactElement {
   return (
     <Container>
       <Text>
-        {booking.pickup.pickupLatitude},{booking.pickup.pickupLongitude}
+        {booking.pickup.pickupAddress}, {booking.pickup.pickupLatitude},
+        {booking.pickup.pickupLongitude}
       </Text>
       <Text>
-        {booking.dropoff.dropoffLatitude},{booking.dropoff.dropoffLongitude}
+        {booking.dropoff.dropoffAddress}, {booking.dropoff.dropoffLatitude},
+        {booking.dropoff.dropoffLongitude}
+      </Text>
+      <Text>
+        {booking.trip.tripId}, {booking.trip.tripId}
       </Text>
 
       {location && (
@@ -102,8 +106,8 @@ function Page(props: Props): React.ReactElement {
       )}
 
       <PrevNextButtons
-        prevFunc={(): void => props.navigation.navigate('TripDetails')}
-        nextFunc={(): void => props.navigation.navigate('DropoffMap')}
+        prevFunc={(): void => props.navigation.navigate('PickupMap')}
+        nextFunc={(): void => props.navigation.navigate('SelectTable')}
       />
     </Container>
   );
