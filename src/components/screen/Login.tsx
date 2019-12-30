@@ -80,29 +80,6 @@ function Page(props: Props): ReactElement {
           }
         });
       }
-      // {
-
-      //   {
-      //     "additionalUserInfo": {"isNewUser": false, "providerId": "password"},
-      //     "credential": null, "operationType": "signIn",
-      //     "user": {"apiKey": "AIzaSyCmmiyeaqjo86zIwvy0TdFFaNwlmEYkn3o",
-      //                 "appName": "[DEFAULT]",
-      //                 "authDomain": "busshuttle-48ae5.firebaseapp.com",
-      //                 "createdAt": "1577175313362",
-      //                 "displayName": null,
-      //                 "email": "a@aa.com",
-      //                 "emailVerified": false,
-      //                 "isAnonymous": false,
-      //                 "lastLoginAt": "1577588420047",
-      //                 "phoneNumber": null,
-      //                 "photoURL": null,
-      //                 "providerData": [Array],
-      //                 "redirectEventId": null,
-      //                 "stsTokenManager": [Object],
-      //                 "tenantId": null,
-      //                 "uid": "QWKJVrRstygWRoMPnWvlLxanV3C3"
-      //     }
-      // }
     } catch (e) {
       console.error(e.message);
     }
@@ -129,7 +106,9 @@ function Page(props: Props): ReactElement {
 
       <Input
         placeholder="password"
-        ref={register({ name: 'password' })}
+        password
+        viewPass
+        ref={register({ name: 'password' }, { required: true })}
         onChangeText={(text): void => setValue('password', text)}
       />
       {errors.password && <Text>Password is required.</Text>}

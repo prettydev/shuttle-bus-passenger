@@ -2,6 +2,7 @@ import 'firebase/auth';
 import 'firebase/firestore';
 import * as firebase from 'firebase';
 import {
+  Booking,
   DefaultNavigationProps,
   Driver,
   Dropoff,
@@ -9,8 +10,9 @@ import {
   Rider,
   Trip,
   User,
+  UserCredential,
   Vehicle,
-} from '../../types';
+} from '../types';
 
 type callbackFn = (doc) => void;
 
@@ -43,33 +45,27 @@ const vehicles = firebase.firestore().collection('vehicles');
 const bookings = firebase.firestore().collection('bookings');
 
 // auth
-export const loginWithEmail = (
-  email: string,
-  password: string,
-): Promise<Response> => {
+export const loginWithEmail = (email: string, password: string): any => {
   return auth.signInWithEmailAndPassword(email, password);
 };
-export const signupWithEmail = (
-  email: string,
-  password: string,
-): Promise<Response> => {
+export const signupWithEmail = (email: string, password: string): any => {
   return auth.createUserWithEmailAndPassword(email, password);
 };
-export const signOut = (): Promise<Response> => {
+export const signOut = (): Promise<void> => {
   return auth.signOut();
 };
-export const checkUserAuth = (user): Promise<Response> => {
+export const checkUserAuth = (user): any => {
   return auth.onAuthStateChanged(user);
 };
-export const passwordReset = (email): Promise<Response> => {
+export const passwordReset = (email): any => {
   return auth.sendPasswordResetEmail(email);
 };
-export const getCurrentUserId = (): Promise<Response> => {
-  return auth.currentUser.uid;
+export const getCurrentUserId = (): any => {
+  return auth.currentUser && auth.currentUser.uid;
 };
 
 // /// //////////////////////////////////////////////////////////////////////////////////////////////
-export const createNewRider = (doc: Rider): Promise<Response> => {
+export const createNewRider = (doc: any): Promise<void | Response> => {
   doc.createdAt = firebase.firestore.FieldValue.serverTimestamp();
   doc.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
   return riders.doc(`${doc.uid}`).set(doc);
@@ -77,7 +73,7 @@ export const createNewRider = (doc: Rider): Promise<Response> => {
 export const getRiderDetails = (
   key: string,
   callback: callbackFn,
-): Promise<Response> => {
+): Promise<void | Response> => {
   return riders
     .doc(key)
     .get()
@@ -85,16 +81,16 @@ export const getRiderDetails = (
 };
 
 /// /////////////////////////////////////////////////////////////////////////////////////////////
-export const createNewDriver = (doc): Promise<Response> => {
+export const createNewDriver = (doc): Promise<void | Response> => {
   doc.createdAt = firebase.firestore.FieldValue.serverTimestamp();
   doc.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
   return drivers.doc(doc.uid).set(doc);
 };
-export const getDrivers = (callback): Promise<Response> => {
-  drivers.onSnapshot(callback);
+export const getDrivers = (callback): any => {
+  return drivers.onSnapshot(callback);
 };
-export const getDriverDetails = (key, callback): Promise<Response> => {
-  drivers
+export const getDriverDetails = (key, callback): Promise<void | Response> => {
+  return drivers
     .doc(key)
     .get()
     .then(callback);
@@ -104,15 +100,15 @@ export const setDriver = (
   doc,
   callback1,
   callback2,
-): Promise<Response> => {
-  drivers
+): Promise<void | Response> => {
+  return drivers
     .doc(key)
     .set(doc)
     .then(callback1)
     .catch(callback2);
 };
 
-export const deleteDriver = (key, callback1, callback2): Promise<Response> => {
+export const deleteDriver = (key, callback1, callback2): any => {
   drivers
     .doc(key)
     .delete()
@@ -122,42 +118,48 @@ export const deleteDriver = (key, callback1, callback2): Promise<Response> => {
 
 // /// /////////////////////////////////////////////////////////////////////////////////////////////
 
-export const getTrips = (callback): Promise<Response> => {
+export const getTrips = (callback): any => {
   return trips.onSnapshot(callback);
 };
 
-export const getTripDetails = (key, callback): Promise<Response> => {
-  trips
+export const getTripDetails = (key, callback): Promise<void | Response> => {
+  return trips
     .doc(key)
     .get()
     .then(callback);
 };
 
-export const updateSeatOfTrip = (
-  tripId,
-  seatId,
-  seatState,
-  riderId,
-  riderName,
-  callback,
-): Promise<Response> => {
+export const updateSeatOfTrip = (tripId, currentSeat, callback): any => {
   trips
     .doc(tripId)
     .update({
-      ['bookings.' + seatId + '.state']: seatState,
-      ['bookings.' + seatId + '.riderId']: riderId,
-      ['bookings.' + seatId + '.riderName']: riderName,
+      ['bookings.' + currentSeat.seatId + '.seatState']: currentSeat.seatState,
+      // ['bookings.' + seatId + '.active']: active,
     })
     .then(callback);
 };
 
 /// ////////////////////////////////////////////////////////////////////////////////////////////
 export const createNewBooking = (doc, callback): Promise<Response> => {
-  doc.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-  doc.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
-  return bookings.add(doc).then(callback);
+  doc.updateInfo = {
+    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+  };
+
+  return bookings
+    .add({
+      ...doc.trip,
+      ...doc.rider,
+      ...doc.driver,
+      ...doc.vehicle,
+      ...doc.pickup,
+      ...doc.dropoff,
+      ...doc.seat,
+      ...doc.updateInfo,
+    })
+    .then(callback);
 };
 
-export const getBookings = (callback): Promise<Response> => {
+export const getBookings = (callback): any => {
   bookings.onSnapshot(callback);
 };

@@ -64,7 +64,7 @@ const initDetails = {
 
 function Page(props: Props): React.ReactElement {
   const {
-    state: { booking },
+    state: { booking, seats },
     setVehicle,
     setDriver,
     setSeats,
@@ -201,8 +201,8 @@ function Page(props: Props): React.ReactElement {
                 driverPhone: details.driverPhone,
               };
               setDriver(driver);
-              const seats: Seats = details.bookings;
-              setSeats(seats);
+              const newSeats: Seats = Object.assign({}, details.bookings);
+              setSeats(newSeats);
               props.navigation.navigate('PickupMap');
             }}
           />

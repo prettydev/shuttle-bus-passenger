@@ -55,9 +55,12 @@ export interface Dropoff {
 }
 
 export interface Seat {
+  seatState: number;
+}
+
+export interface CurrentSeat {
   seatId: string;
   seatState: number;
-  active: boolean;
 }
 
 export interface Booking {
@@ -67,7 +70,7 @@ export interface Booking {
   vehicle: Vehicle;
   pickup: Pickup;
   dropoff: Dropoff;
-  seat: Seat;
+  seat: CurrentSeat;
 }
 
 export interface Seats {
@@ -130,9 +133,7 @@ export interface Seats {
 }
 
 const initSeat = {
-  seatId: '',
   seatState: 0,
-  active: true,
 };
 
 export const initSeats = {
@@ -196,6 +197,9 @@ export const initSeats = {
 
 type StackParamList = {
   default: undefined;
+  App: string;
+  Auth: string;
+  AuthCheck: string;
   Home: { userId: string };
   Login: undefined;
   TripList: undefined;
@@ -203,6 +207,9 @@ type StackParamList = {
   PickupMap: undefined;
   DropoffMap: undefined;
   BookingList: undefined;
+  SelectTable: undefined;
+  Preview: undefined;
+  Confirm: undefined;
 };
 
 type StackRootParamList = {
@@ -226,3 +233,30 @@ interface IconProps {
 }
 
 export type IconType = SFC<IconProps>;
+
+export type UserCredential = {
+  additionalUserInfo: {
+    isNewUser: boolean;
+    providerId: string;
+  };
+  credential: string;
+  operationType: string;
+  user: {
+    apiKey: string;
+    appName: string;
+    authDomain: string;
+    createdAt: string;
+    displayName: string;
+    email: string;
+    emailVerified: boolean;
+    isAnonymous: boolean;
+    lastLoginAt: string;
+    phoneNumber: string;
+    photoURL: string;
+    providerData: Array<any>;
+    redirectEventId: string;
+    stsTokenManager: Array<Record<string, any>>;
+    tenantId: string;
+    uid: string;
+  };
+};

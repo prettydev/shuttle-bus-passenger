@@ -1,5 +1,6 @@
 import {
   Booking,
+  CurrentSeat,
   Driver,
   Dropoff,
   Pickup,
@@ -27,7 +28,7 @@ interface Context {
   setVehicle: (vehicle: Vehicle) => void;
   setPickup: (pickup: Pickup) => void;
   setDropoff: (dropoff: Dropoff) => void;
-  setSeat: (seat: Seat) => void;
+  setSeat: (seat: CurrentSeat) => void;
   setSeats: (seats: Seats) => void;
 }
 const [useCtx, Provider] = createCtx<Context>();
@@ -97,7 +98,6 @@ const initialState: State = {
     seat: {
       seatId: '',
       seatState: 0,
-      active: true,
     },
   },
   seats: initSeats,

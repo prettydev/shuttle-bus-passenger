@@ -21,9 +21,6 @@ interface ILocation {
   longitude: number;
 }
 
-// justifyContent: 'flex-end',
-//     alignItems: 'center',
-
 const DEFAULT_DELTA = { latitudeDelta: 0.015, longitudeDelta: 0.0121 };
 // const DEFAULT_DELTA = {latitudeDelta: 0.0922, longitudeDelta: 0.0421}
 
@@ -50,6 +47,7 @@ function Page(props: Props): React.ReactElement {
         });
       },
       (error) => {
+        // eslint-disable-next-line no-console
         console.log(error.code, error.message);
       },
       { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
@@ -69,6 +67,7 @@ function Page(props: Props): React.ReactElement {
   };
 
   const onDragStart = (e): void => {
+    // eslint-disable-next-line no-console
     console.log(e);
   };
 
@@ -83,7 +82,9 @@ function Page(props: Props): React.ReactElement {
 
       {location && (
         <MapView
-          style={{ flex: 1 }}
+          style={{
+            flex: 1,
+          }}
           provider={PROVIDER_GOOGLE}
           initialRegion={{
             latitude: location.latitude,

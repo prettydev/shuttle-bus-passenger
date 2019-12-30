@@ -20,7 +20,7 @@ function Page(props: Props): React.ReactElement {
 
   return (
     <View>
-      <ActivityIndicator />
+      <ActivityIndicator size="large" />
       <StatusBar barStyle="default" />
     </View>
   );
