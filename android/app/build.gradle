@@ -22,10 +22,10 @@ import com.android.build.OutputFile
  *   bundleCommand: "ram-bundle",
  *
  *   // whether to bundle JS and assets in debug mode
- *   bundleInDebug: false,
+ *   bundleInDebug: true,
  *
  *   // whether to bundle JS and assets in release mode
- *   bundleInRelease: true,
+ *   bundleInRelease: false,
  *
  *   // whether to bundle JS and assets in another build variant (if configured).
  *   // See http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Build-Variants
@@ -78,6 +78,8 @@ import com.android.build.OutputFile
 project.ext.react = [
     entryFile: "index.js",
     enableHermes: false,  // clean and rebuild if changing
+    // bundleInDebug: true,    
+    // devDisabledInDebug: true
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -149,18 +151,29 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        // release {
+        //     storeFile file('shuttlebus.keystore')
+        //     storePassword '123456'
+        //     keyAlias 'shuttlebuskey'
+        //     keyPassword '123456'
+        // }
     }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
         }
-        release {
+        // release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://facebook.github.io/react-native/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
-            minifyEnabled enableProguardInReleaseBuilds
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-        }
+            // signingConfig signingConfigs.release
+            // minifyEnabled enableProguardInReleaseBuilds
+            // proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+
+            // storeFile file('your_key_name.keystore')
+            // storePassword System.console().readLine("\nKeystore password:")
+            // keyAlias System.console().readLine("\nAlias: ")
+            // keyPassword System.console().readLine("\Alias password: ")
+        // }
     }
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
