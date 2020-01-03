@@ -4,9 +4,6 @@ import RootProvider from './providers';
 import SplashScreen from 'react-native-splash-screen';
 
 function App(): React.ReactElement {
-  useEffect(() => {
-    SplashScreen.hide();
-  }, []);
   return <RootNavigator />;
 }
 
