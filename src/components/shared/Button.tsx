@@ -1,102 +1,35 @@
-import {
-  ActivityIndicator,
-  ImageSourcePropType,
-  ImageStyle,
-  TextStyle,
-  TouchableOpacity,
-  ViewStyle,
-} from 'react-native';
+import React, { memo } from 'react';
+import { Button as PaperButton } from 'react-native-paper';
+import { StyleSheet } from 'react-native';
+import { theme } from '../core/theme';
 
-import React from 'react';
-import styled from 'styled-components/native';
+type Props = React.ComponentProps<typeof PaperButton>;
 
-const StyledButton = styled.View`
-  background-color: ${({ theme }): string => theme.btnPrimary};
-  align-self: center;
-  border-radius: 4;
-  border-width: 2;
-  width: 320;
-  height: 52;
-  border-color: ${({ theme }): string => theme.btnPrimary};
+const Button = ({ mode, style, children, ...props }: Props) => (
+  <PaperButton
+    style={[
+      styles.button,
+      mode === 'outlined' && { backgroundColor: theme.colors.surface },
+      style,
+    ]}
+    labelStyle={styles.text}
+    mode={mode}
+    {...props}
+  >
+    {children}
+  </PaperButton>
+);
 
-  align-items: center;
-  justify-content: center;
-`;
+const styles = StyleSheet.create({
+  button: {
+    width: '100%',
+    marginVertical: 10,
+  },
+  text: {
+    fontWeight: 'bold',
+    fontSize: 15,
+    lineHeight: 26,
+  },
+});
 
-const StyledButtonDisabled = styled(StyledButton)`
-  background-color: ${({ theme }): string => theme.btnDisabled};
-  border-color: rgb(200, 200, 200);
-`;
-
-const StyledText = styled.Text`
-  font-size: 14;
-  color: ${({ theme }): string => theme.btnPrimaryFont};
-`;
-
-const StyledTextDisabled = styled(StyledText)`
-  color: ${({ theme }): string => theme.textDisabled};
-`;
-
-const StyledImage = styled.Image`
-  width: 24;
-  height: 24;
-  position: absolute;
-  left: 16;
-`;
-
-interface Props {
-  testID?: string;
-  isLoading?: boolean;
-  isDisabled?: boolean;
-  onClick?: () => void;
-  style?: ViewStyle;
-  disabledStyle?: ViewStyle;
-  textStyle?: TextStyle;
-  imgLeftSrc?: ImageSourcePropType;
-  imgLeftStyle?: ImageStyle;
-  indicatorColor?: string;
-  activeOpacity?: number;
-  text?: string;
-}
-
-function Button(props: Props): React.ReactElement {
-  if (props.isDisabled) {
-    return (
-      <StyledButtonDisabled style={props.disabledStyle}>
-        <StyledTextDisabled style={props.textStyle}>
-          {props.text}
-        </StyledTextDisabled>
-      </StyledButtonDisabled>
-    );
-  }
-  if (props.isLoading) {
-    return (
-      <StyledButton style={props.style}>
-        <ActivityIndicator size="small" color={props.indicatorColor} />
-      </StyledButton>
-    );
-  }
-  return (
-    <TouchableOpacity
-      testID={props.testID}
-      activeOpacity={props.activeOpacity}
-      onPress={props.onClick}
-    >
-      <StyledButton style={props.style}>
-        {props.imgLeftSrc ? (
-          <StyledImage style={props.imgLeftStyle} source={props.imgLeftSrc} />
-        ) : null}
-        <StyledText style={props.textStyle}>{props.text}</StyledText>
-      </StyledButton>
-    </TouchableOpacity>
-  );
-}
-
-Button.defaultProps = {
-  isLoading: false,
-  isDisabled: false,
-  indicatorColor: 'white',
-  activeOpacity: 0.5,
-};
-
-export default Button;
+export default memo(Button);

@@ -202,6 +202,8 @@ type StackParamList = {
   AuthCheck: string;
   Home: { userId: string };
   Login: undefined;
+  Register: undefined;
+  ForgotPassword: undefined;
   TripList: undefined;
   TripDetails: undefined;
   PickupMap: undefined;

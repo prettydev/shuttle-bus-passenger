@@ -4,9 +4,9 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import { Block, Card, theme } from 'galio-framework';
 import { DefaultNavigationProps, Trip } from '../../types';
 import React, { ReactElement, useEffect, useState } from 'react';
+import { Card } from 'react-native-elements';
 import { getTrips } from '../../apis/firebase';
 import { useAppContext } from '../../providers/AppProvider';
 
@@ -65,7 +65,7 @@ function Page(props: Props): React.ReactElement {
 
   const renderList = (): ReactElement => {
     return (
-      <Block flex>
+      <>
         {trips &&
           trips.map((doc, i) => (
             <TouchableOpacity
@@ -91,12 +91,12 @@ function Page(props: Props): React.ReactElement {
               />
             </TouchableOpacity>
           ))}
-      </Block>
+      </>
     );
   };
 
   return (
-    <Block flex center>
+    <>
       {isLoading ? (
         <ActivityIndicator size="large" />
       ) : (
@@ -104,7 +104,7 @@ function Page(props: Props): React.ReactElement {
           {renderList()}
         </ScrollView>
       )}
-    </Block>
+    </>
   );
 }
 

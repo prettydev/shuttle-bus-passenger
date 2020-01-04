@@ -1,5 +1,5 @@
 import { ActivityIndicator, Dimensions, ScrollView } from 'react-native';
-import { Block, Button, Card, Text, theme } from 'galio-framework';
+import { Block, Button, Card, Text, theme } from 'react-native-elements';
 import {
   CurrentSeat,
   DefaultNavigationProps,

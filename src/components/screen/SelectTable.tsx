@@ -4,7 +4,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import { Block, Button, Card, Text, theme } from 'galio-framework';
+import { Card, Text } from 'react-native-elements';
 import {
   CurrentSeat,
   DefaultNavigationProps,
@@ -64,68 +64,51 @@ function Page(props: Props): React.ReactElement {
   };
 
   return (
-    <Block flex center>
+    <>
       <Text>{booking.trip.tripId}</Text>
       <Text>{booking.trip.tripAlias}</Text>
       <Text>{booking.rider.riderId}</Text>
       <Text>{booking.rider.riderName}</Text>
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Block
-          flex
-          card
-          shadow
-          style={[{ width: width - theme.SIZES.BASE * 2 }]}
-        >
-          {rowArr.map((row, i) => (
-            <Block key={i} flex row>
-              {colArr.map((column, j) => (
-                <Block
-                  key={i * colCnt + j + 1}
-                  flex
-                  card
-                  shadow
-                  style={[{ width: '20%' }]}
-                >
-                  <TouchableOpacity
-                    onPress={(): void => {
-                      selectSeat(i, j);
-                    }}
-                  >
-                    <Card
-                      titleColor={
-                        seats[String.fromCharCode(i + 65) + (j + 1)]
-                          .seatState === 0
-                          ? 'pink'
-                          : seats[String.fromCharCode(i + 65) + (j + 1)]
-                              .seatState === 1
-                          ? 'blue'
-                          : 'green'
-                      }
-                      title={
-                        String.fromCharCode(i + 65) +
-                        (j + 1) +
-                        '(' +
-                        (i * colCnt + j + 1) +
-                        ')' +
-                        seats[String.fromCharCode(i + 65) + (j + 1)].seatState
-                      }
-                      containerStyle={{
-                        borderBottomWidth: 0,
-                      }}
-                    />
-                  </TouchableOpacity>
-                </Block>
-              ))}
-            </Block>
-          ))}
-        </Block>
+        {rowArr.map((row, i) => {
+          colArr.map((column, j) => (
+            <TouchableOpacity
+              key={i * colCnt + j + 1}
+              onPress={(): void => {
+                selectSeat(i, j);
+              }}
+            >
+              <Card
+                titleColor={
+                  seats[String.fromCharCode(i + 65) + (j + 1)].seatState === 0
+                    ? 'pink'
+                    : seats[String.fromCharCode(i + 65) + (j + 1)].seatState ===
+                      1
+                    ? 'blue'
+                    : 'green'
+                }
+                title={
+                  String.fromCharCode(i + 65) +
+                  (j + 1) +
+                  '(' +
+                  (i * colCnt + j + 1) +
+                  ')' +
+                  seats[String.fromCharCode(i + 65) + (j + 1)].seatState
+                }
+                containerStyle={{
+                  borderBottomWidth: 0,
+                }}
+              />
+            </TouchableOpacity>
+          ));
+        })}
       </ScrollView>
       <PrevNextButtons
         prevFunc={(): void => props.navigation.navigate('DropoffMap')}
         nextFunc={(): void => props.navigation.navigate('Preview')}
       />
-    </Block>
+    </>
   );
 }
 

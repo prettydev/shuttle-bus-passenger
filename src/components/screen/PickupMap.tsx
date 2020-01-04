@@ -1,4 +1,4 @@
-import { Block, Button, Card, Text, theme } from 'galio-framework';
+import { Block, Button, Card, Text, theme } from 'react-native-elements';
 import { DefaultNavigationProps, Pickup } from '../../types';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import React, { useEffect, useState } from 'react';

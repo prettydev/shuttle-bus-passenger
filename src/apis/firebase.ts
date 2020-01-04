@@ -68,7 +68,7 @@ export const getCurrentUserId = (): any => {
 export const createNewRider = (doc: any): Promise<void | Response> => {
   doc.createdAt = firebase.firestore.FieldValue.serverTimestamp();
   doc.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
-  return riders.doc(`${doc.uid}`).set(doc);
+  return riders.doc(`${doc.id}`).set(doc);
 };
 export const getRiderDetails = (
   key: string,

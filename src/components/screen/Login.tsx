@@ -1,56 +1,67 @@
-import * as Yup from 'yup';
-import { Block, Button, Input, Text } from 'galio-framework';
 import { DefaultNavigationProps, Rider, User } from '../../types';
-import React, { ReactElement, useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-
+import React, { ReactElement, memo, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { emailValidator, passwordValidator } from '../core/utils';
 import {
   getRiderDetails,
   loginWithEmail,
   signupWithEmail,
 } from '../../apis/firebase';
-import AppLogo from '../shared/AppLogo';
-
-import { getString } from '../../../STRINGS';
+import BackButton from '../shared/BackButton';
+import Background from '../shared/Background';
+import Button from '../shared/Button';
+import Header from '../shared/Header';
+import Logo from '../shared/Logo';
+import TextInput from '../shared/TextInput';
+import { theme } from '../core/theme';
 import { useAppContext } from '../../providers/AppProvider';
-import { useForm } from 'react-hook-form';
-
 interface Props {
   navigation: DefaultNavigationProps<'App'>;
 }
 
-const validationSchema = Yup.object().shape({
-  email: Yup.string()
-    .label('Email')
-    .email('Enter a valid email')
-    .required('Please enter a registered email'),
-  password: Yup.string()
-    .label('Password')
-    .required()
-    .min(6, 'Password must have at least 6 characters '),
+const styles = StyleSheet.create({
+  forgotPassword: {
+    width: '100%',
+    alignItems: 'flex-end',
+    marginBottom: 24,
+  },
+  row: {
+    flexDirection: 'row',
+    marginTop: 4,
+  },
+  label: {
+    color: theme.colors.secondary,
+  },
+  link: {
+    fontWeight: 'bold',
+    color: theme.colors.primary,
+  },
 });
 
-function Page(props: Props): ReactElement {
+// const LoginScreen = ({ navigation }: Props) => {
+function LoginScreen(props: Props): ReactElement {
   const {
     state: { user, booking },
     setUser,
     setRider,
   } = useAppContext();
 
-  const goToSignup = (): void => props.navigation.navigate('Register');
-  const goToForgotPassword = (): void =>
-    props.navigation.navigate('ForgotPassword');
+  const [email, setEmail] = useState({ value: '', error: '' });
+  const [password, setPassword] = useState({ value: '', error: '' });
 
-  async function signup(email, password): Promise<void> {
-    try {
-      await signupWithEmail(email, password);
-    } catch (e) {
-      console.error(e.message);
+  // const _onLoginPressed = () => {
+  async function _onLoginPressed(): Promise<void> {
+    const emailError = emailValidator(email.value);
+    const passwordError = passwordValidator(password.value);
+
+    if (emailError || passwordError) {
+      setEmail({ ...email, error: emailError });
+      setPassword({ ...password, error: passwordError });
+      return;
     }
-  }
-  async function login(email, password): Promise<void> {
+
     try {
-      const userCredential = await loginWithEmail(email, password);
+      const userCredential = await loginWithEmail(email.value, password.value);
 
       console.log('ghhhhhhhhhhhhhhhhhhhhhhh================', userCredential);
 
@@ -85,37 +96,61 @@ function Page(props: Props): ReactElement {
     }
   }
 
-  useEffect(() => {
-    // const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    // return subscriber; // unsubscribe on unmount
-  }, []);
-
-  const { register, setValue, handleSubmit, errors } = useForm();
-  const onSubmit = (data): void => {
-    login(data.email, data.password);
-  };
-
   return (
-    <Block flex center>
-      <Input
-        placeholder="email"
-        ref={register({ name: 'email' }, { required: true })}
-        onChangeText={(text): void => setValue('email', text, true)}
-      />
-      {errors.email && <Text>Email is required.</Text>}
+    <Background>
+      <Logo />
 
-      <Input
-        placeholder="password"
-        password
-        viewPass
-        ref={register({ name: 'password' }, { required: true })}
-        onChangeText={(text): void => setValue('password', text)}
-      />
-      {errors.password && <Text>Password is required.</Text>}
+      <Header>Shuttle Bus Passenger</Header>
 
-      <Button onPress={handleSubmit(onSubmit)}>{getString('LOGIN')}</Button>
-    </Block>
+      <TextInput
+        label="Email"
+        returnKeyType="next"
+        value={email.value}
+        onChangeText={(text: string): void =>
+          setEmail({ value: text, error: '' })
+        }
+        error={!!email.error}
+        errorText={email.error}
+        autoCapitalize="none"
+        autoCompleteType="email"
+        textContentType="emailAddress"
+        keyboardType="email-address"
+      />
+
+      <TextInput
+        label="Password"
+        returnKeyType="done"
+        value={password.value}
+        onChangeText={(text: string): void =>
+          setPassword({ value: text, error: '' })
+        }
+        error={!!password.error}
+        errorText={password.error}
+        secureTextEntry
+      />
+
+      <View style={styles.forgotPassword}>
+        <TouchableOpacity
+          onPress={(): void => props.navigation.navigate('ForgotPassword')}
+        >
+          <Text style={styles.label}>Forgot your password?</Text>
+        </TouchableOpacity>
+      </View>
+
+      <Button mode="contained" onPress={_onLoginPressed}>
+        Login
+      </Button>
+
+      <View style={styles.row}>
+        <Text style={styles.label}>Don’t have an account? </Text>
+        <TouchableOpacity
+          onPress={(): void => props.navigation.navigate('Register')}
+        >
+          <Text style={styles.link}>Sign up</Text>
+        </TouchableOpacity>
+      </View>
+    </Background>
   );
 }
 
-export default Page;
+export default memo(LoginScreen);

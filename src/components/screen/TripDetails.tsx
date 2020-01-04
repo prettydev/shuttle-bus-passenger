@@ -1,5 +1,5 @@
 import { ActivityIndicator, Dimensions, ScrollView } from 'react-native';
-import { Block, Button, Card, Text, theme } from 'galio-framework';
+import { Text } from 'react-native-elements';
 import {
   DefaultNavigationProps,
   Driver,
@@ -87,82 +87,42 @@ function Page(props: Props): React.ReactElement {
 
   const render = (): ReactElement => {
     return (
-      <Block flex card shadow style={{ width: width - theme.SIZES.BASE * 2 }}>
-        <Block flex space="between" style={{ padding: theme.SIZES.BASE }}>
-          <Text size={18} center>
-            {details && details.alias}
-          </Text>
+      <>
+        <Text>{details && details.alias}</Text>
 
-          <Text size={12} muted bold>
-            Departure
-          </Text>
-          <Text size={14}>{details && details.departureAddress}</Text>
+        <Text>Departure</Text>
+        <Text>{details && details.departureAddress}</Text>
 
-          <Text size={12} muted bold>
-            Destination
-          </Text>
-          <Text size={14}>{details && details.destinationAddress}</Text>
+        <Text>Destination</Text>
+        <Text>{details && details.destinationAddress}</Text>
 
-          <Text size={12} muted bold>
-            Routes
-          </Text>
-          <Text size={14}>{details && details.routes}</Text>
+        <Text>Routes</Text>
+        <Text>{details && details.routes}</Text>
 
-          <Text size={12} muted bold>
-            Departure Datetime
-          </Text>
-          <Text size={14}>{details && details.departureDatetime}</Text>
+        <Text>Departure Datetime</Text>
+        <Text>{details && details.departureDatetime}</Text>
 
-          <Text size={12} muted bold>
-            Estimated Arrival Time
-          </Text>
-          <Text size={14}>{details && details.estimatedArrivalTime}</Text>
+        <Text>Estimated Arrival Time</Text>
+        <Text>{details && details.estimatedArrivalTime}</Text>
 
-          <Text size={14} muted bold style={{ paddingTop: theme.SIZES.BASE }}>
-            Vehicle
-          </Text>
-          <Block flex style={{ paddingLeft: theme.SIZES.BASE }}>
-            <Block flex row>
-              <Block flex style={{ width: '50%' }}>
-                <Text size={12} muted bold>
-                  Capacity
-                </Text>
-                <Text size={14}>{details && details.vehicleCapacity}</Text>
-              </Block>
-              <Block flex style={{ width: '50%' }}>
-                <Text size={12} muted bold>
-                  Model
-                </Text>
-                <Text size={14}>{details && details.vehicleModel}</Text>
-              </Block>
-            </Block>
+        <Text>Vehicle</Text>
+        <Text>Capacity</Text>
+        <Text>{details && details.vehicleCapacity}</Text>
+        <Text>Model</Text>
+        <Text>{details && details.vehicleModel}</Text>
 
-            <Block flex row>
-              <Block flex style={{ width: '50%' }}>
-                <Text size={12} muted bold>
-                  Color
-                </Text>
-                <Text size={14}>{details && details.vehicleColor}</Text>
-              </Block>
-              <Block flex style={{ width: '50%' }}>
-                <Text size={12} muted bold>
-                  Amenities
-                </Text>
-                <Text size={14}>{details && details.vehicleAmenities}</Text>
-              </Block>
-            </Block>
-            <Text size={12} muted bold>
-              LicensePlate
-            </Text>
-            <Text size={14}>{details && details.vehicleLicensePlate}</Text>
-          </Block>
+        <Text>Color</Text>
+        <Text>{details && details.vehicleColor}</Text>
 
-          <Text size={12} muted bold style={{ paddingTop: theme.SIZES.BASE }}>
-            Driver
-          </Text>
-          <Text size={14}>{details && details.driverId}</Text>
-        </Block>
-      </Block>
+        <Text>Amenities</Text>
+        <Text>{details && details.vehicleAmenities}</Text>
+
+        <Text>LicensePlate</Text>
+        <Text>{details && details.vehicleLicensePlate}</Text>
+
+        <Text>Driver</Text>
+        <Text>{details && details.driverId}</Text>
+      </>
     );
   };
 

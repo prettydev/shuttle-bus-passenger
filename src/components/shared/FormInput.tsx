@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Input } from 'react-native-elements';
-// import {Ionicons} from '@expo/vector-icons';
 
 const styles = StyleSheet.create({
   inputContainer: {
