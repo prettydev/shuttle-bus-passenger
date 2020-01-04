@@ -6,6 +6,7 @@ import DropoffMap from '../screen/DropoffMap';
 import ForgotPassword from '../screen/ForgotPasswordScreen';
 import Home from '../screen/Home';
 import Login from '../screen/Login';
+import PhoneLogin from '../screen/PhoneLogin';
 import PickupMap from '../screen/PickupMap';
 import Preview from '../screen/Preview';
 import Register from '../screen/RegisterScreen';
@@ -17,11 +18,12 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 const AuthStack = createStackNavigator({
   Login: Login,
+  PhoneLogin: PhoneLogin,
   Register: Register,
   ForgotPassword: ForgotPassword,
 });
 
-const TripStack = createStackNavigator({
+const BookingStack = createStackNavigator({
   TripList: TripList,
   TripDetails: TripDetails,
   PickupMap: PickupMap,
@@ -33,8 +35,8 @@ const TripStack = createStackNavigator({
 
 const AppStack = createBottomTabNavigator({
   Home: Home,
-  Trip: TripStack,
-  BookingList: BookingList,
+  Booking: BookingStack,
+  History: BookingList,
 });
 
 export default createAppContainer(

@@ -29,7 +29,7 @@ export const nameValidator = (name: string): string => {
 };
 
 export const phoneValidator = (phone: string): string => {
-  const re = /^(0|[0-9][0-9]{13})$/;
+  const re = /^\+[0-9]?()[0-9](\s|\S)(\d[0-9]{8,16})$/;
 
   if (!phone || phone.length <= 0) return 'Phone number cannot be empty.';
   if (!re.test(phone)) return 'Ooops! We need a valid phone number.';

@@ -1,6 +1,13 @@
 import { DefaultNavigationProps, Rider, User } from '../../types';
 import React, { ReactElement, memo, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import {
+  createNewRider,
+  getRiderDetails,
+  loginWithEmail,
+  passwordReset,
+  signupWithEmail,
+} from '../../apis/firebase';
 import BackButton from '../shared/BackButton';
 import Background from '../shared/Background';
 import Button from '../shared/Button';
@@ -31,16 +38,21 @@ const styles = StyleSheet.create({
 const ForgotPasswordScreen = ({ navigation }: Props): ReactElement => {
   const [email, setEmail] = useState({ value: '', error: '' });
 
-  const _onSendPressed = (): void => {
+  async function _onSendPressed(): Promise<void> {
     const emailError = emailValidator(email.value);
 
     if (emailError) {
       setEmail({ ...email, error: emailError });
-      return;
     }
 
-    navigation.navigate('Login');
-  };
+    try {
+      await passwordReset(email.value);
+      navigation.navigate('Login');
+    } catch (error) {
+      console.log('reset error', error);
+    } finally {
+    }
+  }
 
   return (
     <Background>
@@ -64,7 +76,7 @@ const ForgotPasswordScreen = ({ navigation }: Props): ReactElement => {
       />
 
       <Button mode="contained" onPress={_onSendPressed} style={styles.button}>
-        Send Reset Instructions
+        Send Reset Email
       </Button>
 
       <TouchableOpacity

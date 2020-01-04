@@ -48,8 +48,8 @@ function LoginScreen(props: Props): ReactElement {
 
   const [email, setEmail] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
+  const [errorMsg, setErrorMsg] = useState('');
 
-  // const _onLoginPressed = () => {
   async function _onLoginPressed(): Promise<void> {
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
@@ -63,13 +63,8 @@ function LoginScreen(props: Props): ReactElement {
     try {
       const userCredential = await loginWithEmail(email.value, password.value);
 
-      console.log('ghhhhhhhhhhhhhhhhhhhhhhh================', userCredential);
-
       if (userCredential.user) {
-        getRiderDetails(userCredential.user.uid, (res) => {
-          console.log('ccccccccccccccccccccc================', res.id);
-          console.log('jjjjjjjjjjjjjjjjjjjjjjjjjj================', res.data());
-
+        await getRiderDetails(userCredential.user.uid, (res) => {
           if (res.data()) {
             const user: User = {
               userId: res.id,
@@ -92,7 +87,8 @@ function LoginScreen(props: Props): ReactElement {
         });
       }
     } catch (e) {
-      console.error(e.message);
+      console.log(e.message);
+      setErrorMsg(e.message);
     }
   }
 
@@ -102,13 +98,22 @@ function LoginScreen(props: Props): ReactElement {
 
       <Header>Shuttle Bus Passenger</Header>
 
+      <Text>test@test.com, 123123</Text>
+
+      <TouchableOpacity
+        onPress={(): void => props.navigation.navigate('PhoneLogin')}
+      >
+        <Text style={styles.label}>Login with phone number?</Text>
+      </TouchableOpacity>
+
       <TextInput
         label="Email"
         returnKeyType="next"
         value={email.value}
-        onChangeText={(text: string): void =>
-          setEmail({ value: text, error: '' })
-        }
+        onChangeText={(text: string): void => {
+          setErrorMsg('');
+          setEmail({ value: text, error: '' });
+        }}
         error={!!email.error}
         errorText={email.error}
         autoCapitalize="none"
@@ -121,9 +126,10 @@ function LoginScreen(props: Props): ReactElement {
         label="Password"
         returnKeyType="done"
         value={password.value}
-        onChangeText={(text: string): void =>
-          setPassword({ value: text, error: '' })
-        }
+        onChangeText={(text: string): void => {
+          setErrorMsg('');
+          setPassword({ value: text, error: '' });
+        }}
         error={!!password.error}
         errorText={password.error}
         secureTextEntry
@@ -136,6 +142,10 @@ function LoginScreen(props: Props): ReactElement {
           <Text style={styles.label}>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
+
+      {errorMsg ? (
+        <Text style={{ color: theme.colors.error }}>{errorMsg}</Text>
+      ) : null}
 
       <Button mode="contained" onPress={_onLoginPressed}>
         Login

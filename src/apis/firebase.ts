@@ -14,6 +14,7 @@ import {
   Vehicle,
 } from '../types';
 
+import fbauth from '@react-native-firebase/auth';
 type callbackFn = (doc) => void;
 
 const config = {
@@ -54,6 +55,10 @@ export const signupWithEmail = (email: string, password: string): any => {
 export const signOut = (): Promise<void> => {
   return auth.signOut();
 };
+export async function loginWithPhone(phone: string): Promise<any> {
+  const confirmation = await fbauth().signInWithPhoneNumber(phone); // '+1 650-555-3434'
+  return confirmation;
+}
 export const checkUserAuth = (user): any => {
   return auth.onAuthStateChanged(user);
 };

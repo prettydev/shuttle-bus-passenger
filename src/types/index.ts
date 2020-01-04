@@ -197,18 +197,20 @@ export const initSeats = {
 
 type StackParamList = {
   default: undefined;
-  App: string;
-  Auth: string;
-  AuthCheck: string;
-  Home: { userId: string };
+  App: undefined;
+  Auth: undefined;
+  AuthCheck: undefined;
+  Home: undefined;
+  Booking: undefined;
+  History: undefined;
   Login: undefined;
+  PhoneLogin: undefined;
   Register: undefined;
   ForgotPassword: undefined;
   TripList: undefined;
   TripDetails: undefined;
   PickupMap: undefined;
   DropoffMap: undefined;
-  BookingList: undefined;
   SelectTable: undefined;
   Preview: undefined;
   Confirm: undefined;
