@@ -2,9 +2,9 @@ import {
   ActivityIndicator,
   Dimensions,
   ScrollView,
+  Text,
   TouchableOpacity,
 } from 'react-native';
-import { Card, Text } from 'react-native-elements';
 import {
   CurrentSeat,
   DefaultNavigationProps,
@@ -14,6 +14,7 @@ import {
   Vehicle,
 } from '../../types';
 import React, { ReactElement, useEffect, useState } from 'react';
+import { Card } from 'react-native-paper';
 import PrevNextButtons from '../shared/PrevNextButtons';
 import { updateSeatOfTrip } from '../../apis/firebase';
 import { useAppContext } from '../../providers/AppProvider';
@@ -64,30 +65,17 @@ function Page(props: Props): React.ReactElement {
   };
 
   return (
-    <>
-      <Text>{booking.trip.tripId}</Text>
-      <Text>{booking.trip.tripAlias}</Text>
-      <Text>{booking.rider.riderId}</Text>
-      <Text>{booking.rider.riderName}</Text>
-
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {rowArr.map((row, i) => {
-          colArr.map((column, j) => (
-            <TouchableOpacity
-              key={i * colCnt + j + 1}
-              onPress={(): void => {
-                selectSeat(i, j);
-              }}
-            >
-              <Card
-                titleColor={
-                  seats[String.fromCharCode(i + 65) + (j + 1)].seatState === 0
-                    ? 'pink'
-                    : seats[String.fromCharCode(i + 65) + (j + 1)].seatState ===
-                      1
-                    ? 'blue'
-                    : 'green'
-                }
+    <ScrollView showsVerticalScrollIndicator={false}>
+      {rowArr.map((row, i) => {
+        colArr.map((column, j) => (
+          <TouchableOpacity
+            key={i * colCnt + j + 1}
+            onPress={(): void => {
+              selectSeat(i, j);
+            }}
+          >
+            <Card>
+              <Card.Title
                 title={
                   String.fromCharCode(i + 65) +
                   (j + 1) +
@@ -96,19 +84,23 @@ function Page(props: Props): React.ReactElement {
                   ')' +
                   seats[String.fromCharCode(i + 65) + (j + 1)].seatState
                 }
-                containerStyle={{
-                  borderBottomWidth: 0,
-                }}
+                // titleColor={
+                //   seats[String.fromCharCode(i + 65) + (j + 1)].seatState === 0
+                //     ? 'pink'
+                //     : seats[String.fromCharCode(i + 65) + (j + 1)].seatState === 1
+                //     ? 'blue'
+                //     : 'green'
+                // }
               />
-            </TouchableOpacity>
-          ));
-        })}
-      </ScrollView>
+            </Card>
+          </TouchableOpacity>
+        ));
+      })}
       <PrevNextButtons
         prevFunc={(): void => props.navigation.navigate('DropoffMap')}
         nextFunc={(): void => props.navigation.navigate('Preview')}
       />
-    </>
+    </ScrollView>
   );
 }
 

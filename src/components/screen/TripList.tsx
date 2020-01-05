@@ -4,9 +4,11 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
+
+import { Avatar, Button, Card, Paragraph, Title } from 'react-native-paper';
 import { DefaultNavigationProps, Trip } from '../../types';
 import React, { ReactElement, useEffect, useState } from 'react';
-import { Card } from 'react-native-elements';
+
 import { getTrips } from '../../apis/firebase';
 import { useAppContext } from '../../providers/AppProvider';
 
@@ -80,15 +82,21 @@ function Page(props: Props): React.ReactElement {
                 props.navigation.navigate('TripDetails');
               }}
             >
-              <Card
-                flex
-                shadow
-                borderless
-                title={doc.alias}
-                caption={doc.departureDatetime}
-                avatar="http://i.pravatar.cc/100?id=skater"
-                style={{ width: width - theme.SIZES.BASE * 2 }}
-              />
+              <Card>
+                <Card.Title
+                  title={doc.alias}
+                  subtitle={doc.departureDatetime}
+                  left={(props): ReactElement => (
+                    <Avatar.Icon {...props} icon="folder" />
+                  )}
+                />
+                <Card.Actions style={{ alignContent: 'flex-end' }}>
+                  <Button>Call</Button>
+                  <Button>Sms</Button>
+                  <Button>Chat</Button>
+                  <Button>Tracking</Button>
+                </Card.Actions>
+              </Card>
             </TouchableOpacity>
           ))}
       </>

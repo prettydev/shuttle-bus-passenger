@@ -1,5 +1,12 @@
-import { ActivityIndicator, Dimensions, ScrollView } from 'react-native';
-import { Block, Button, Card, Text, theme } from 'react-native-elements';
+import {
+  ActivityIndicator,
+  Dimensions,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native';
+
+import { Button, Card } from 'react-native-paper';
 import {
   CurrentSeat,
   DefaultNavigationProps,
@@ -72,107 +79,66 @@ function Page(props: Props): React.ReactElement {
 
   const render = (): ReactElement => {
     return (
-      <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-        <Block flex card shadow style={{ width: width - theme.SIZES.BASE * 2 }}>
-          <Block flex space="between" style={{ padding: theme.SIZES.BASE }}>
-            <Text size={18} center>
-              Booking details
-            </Text>
+      <View>
+        <View>
+          <View>
+            <Text>Booking details</Text>
 
-            <Text size={12} muted bold>
-              Pickup
-            </Text>
-            <Text size={14}>
+            <Text>Pickup</Text>
+            <Text>
               {booking.pickup.pickupLatitude},{booking.pickup.pickupLongitude}
             </Text>
 
-            <Text size={12} muted bold>
-              Dropoff
-            </Text>
-            <Text size={14}>
+            <Text>Dropoff</Text>
+            <Text>
               {booking.dropoff.dropoffLatitude},
               {booking.dropoff.dropoffLongitude}
             </Text>
-            <Text size={14} muted bold style={{ paddingTop: theme.SIZES.BASE }}>
-              Vehicle
-            </Text>
-            <Block flex style={{ paddingLeft: theme.SIZES.BASE }}>
-              <Block flex row>
-                <Block flex style={{ width: '50%' }}>
-                  <Text size={12} muted bold>
-                    Capacity
-                  </Text>
-                  <Text size={14}>{booking.vehicle.vehicleCapacity}</Text>
-                </Block>
-                <Block flex style={{ width: '50%' }}>
-                  <Text size={12} muted bold>
-                    Model
-                  </Text>
-                  <Text size={14}>{booking.vehicle.vehicleModel}</Text>
-                </Block>
-              </Block>
+            <Text>Vehicle</Text>
+            <View>
+              <View>
+                <View>
+                  <Text>Capacity</Text>
+                  <Text>{booking.vehicle.vehicleCapacity}</Text>
+                </View>
+                <View>
+                  <Text>Model</Text>
+                  <Text>{booking.vehicle.vehicleModel}</Text>
+                </View>
+              </View>
 
-              <Block flex row>
-                <Block flex style={{ width: '50%' }}>
-                  <Text size={12} muted bold>
-                    Color
-                  </Text>
-                  <Text size={14}>{booking.vehicle.vehicleColor}</Text>
-                </Block>
-                <Block flex style={{ width: '50%' }}>
-                  <Text size={12} muted bold>
-                    Amenities
-                  </Text>
-                  <Text size={14}>{booking.vehicle.vehicleAmenities}</Text>
-                </Block>
-              </Block>
-              <Text size={12} muted bold>
-                LicensePlate
-              </Text>
-              <Text size={14}>{booking.vehicle.vehicleLicensePlate}</Text>
-            </Block>
+              <View>
+                <View>
+                  <Text>Color</Text>
+                  <Text>{booking.vehicle.vehicleColor}</Text>
+                </View>
+                <View>
+                  <Text>Amenities</Text>
+                  <Text>{booking.vehicle.vehicleAmenities}</Text>
+                </View>
+              </View>
+              <Text>LicensePlate</Text>
+              <Text>{booking.vehicle.vehicleLicensePlate}</Text>
+            </View>
 
-            <Block flex row>
-              <Block flex style={{ width: '50%' }}>
-                <Text
-                  size={12}
-                  muted
-                  bold
-                  style={{
-                    paddingTop: theme.SIZES.BASE,
-                  }}
-                >
-                  Driver
-                </Text>
-                <Text size={14}>{booking.driver.driverName}</Text>
-              </Block>
-              <Block flex style={{ width: '50%' }}>
-                <Text
-                  size={12}
-                  muted
-                  bold
-                  style={{
-                    paddingTop: theme.SIZES.BASE,
-                  }}
-                >
-                  Seat
-                </Text>
-                <Text size={14}>{booking.seat.seatId}</Text>
-              </Block>
-            </Block>
-          </Block>
-        </Block>
-      </Block>
+            <View>
+              <View>
+                <Text>Driver</Text>
+                <Text>{booking.driver.driverName}</Text>
+              </View>
+              <View>
+                <Text>Seat</Text>
+                <Text>{booking.seat.seatId}</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
     );
   };
 
   return (
-    <Block flex center>
-      <Text>{booking.trip.tripId}</Text>
-      <Text>{booking.trip.tripAlias}</Text>
-      <Text>{booking.rider.riderId}</Text>
-      <Text>{booking.rider.riderName}</Text>
-
+    <View>
       <ScrollView showsVerticalScrollIndicator={false}>{render()}</ScrollView>
       <PrevNextButtons
         nextStr={'Confirm'}
@@ -190,7 +156,7 @@ function Page(props: Props): React.ReactElement {
           });
         }}
       />
-    </Block>
+    </View>
   );
 }
 

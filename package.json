@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "@dooboo-ui/native-theme": "^0.1.5",
+    "@mdi/font": "^4.7.95",
     "@react-native-firebase/app": "^6.2.0",
     "@react-native-firebase/auth": "^6.2.0",
     "@react-navigation/core": "^3.5.1",
@@ -102,10 +103,5 @@
     "react-test-renderer": "^16.9.0",
     "ts-jest": "^24.2.0",
     "typescript": "3.7.4"
-  },
-  "peerDependencies": {
-    "react": "*",
-    "react-native": "*",
-    "react-native-vector-icons": "*"
   }
 }

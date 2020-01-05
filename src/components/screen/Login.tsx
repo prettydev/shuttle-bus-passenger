@@ -1,3 +1,4 @@
+import { Colors, IconButton } from 'react-native-paper';
 import { DefaultNavigationProps, Rider, User } from '../../types';
 import React, { ReactElement, memo, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -11,6 +12,7 @@ import BackButton from '../shared/BackButton';
 import Background from '../shared/Background';
 import Button from '../shared/Button';
 import Header from '../shared/Header';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Logo from '../shared/Logo';
 import TextInput from '../shared/TextInput';
 import { theme } from '../core/theme';
@@ -98,13 +100,13 @@ function LoginScreen(props: Props): ReactElement {
 
       <Header>Shuttle Bus Passenger</Header>
 
-      <Text>test@test.com, 123123</Text>
-
       <TouchableOpacity
         onPress={(): void => props.navigation.navigate('PhoneLogin')}
       >
-        <Text style={styles.label}>Login with phone number?</Text>
+        <Text style={styles.label}>email:test@test.com, pass:123123</Text>
       </TouchableOpacity>
+
+      <Button icon="account">Press me</Button>
 
       <TextInput
         label="Email"

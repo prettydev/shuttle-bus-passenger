@@ -73,13 +73,6 @@ function Page(props: Props): React.ReactElement {
 
   return (
     <Container>
-      <Text>
-        {booking.pickup.pickupLatitude},{booking.pickup.pickupLongitude}
-      </Text>
-      <Text>
-        {booking.dropoff.dropoffLatitude},{booking.dropoff.dropoffLongitude}
-      </Text>
-
       {location && (
         <MapView
           style={{

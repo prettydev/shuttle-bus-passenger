@@ -1,5 +1,10 @@
-import { ActivityIndicator, Dimensions, ScrollView } from 'react-native';
-import { Text } from 'react-native-elements';
+import {
+  ActivityIndicator,
+  Dimensions,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native';
 import {
   DefaultNavigationProps,
   Driver,
@@ -127,19 +132,13 @@ function Page(props: Props): React.ReactElement {
   };
 
   return (
-    <Block flex center>
-      <Text>{booking.trip.tripId}</Text>
-      <Text>{booking.trip.tripAlias}</Text>
-      <Text>{booking.rider.riderId}</Text>
-      <Text>{booking.rider.riderName}</Text>
-
+    <View>
       {isLoading ? (
         <ActivityIndicator size="large" />
       ) : (
-        <>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            {render()}
-          </ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {render()}
+
           <PrevNextButtons
             prevFunc={(): void => props.navigation.navigate('TripList')}
             nextFunc={(): void => {
@@ -166,9 +165,9 @@ function Page(props: Props): React.ReactElement {
               props.navigation.navigate('PickupMap');
             }}
           />
-        </>
+        </ScrollView>
       )}
-    </Block>
+    </View>
   );
 }
 

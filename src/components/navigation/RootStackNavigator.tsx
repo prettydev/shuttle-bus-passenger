@@ -1,3 +1,5 @@
+import { Colors, IconButton } from 'react-native-paper';
+import React, { ReactElement } from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import AuthCheck from '../screen/AuthCheck';
 import BookingList from '../screen/BookingList';
@@ -5,6 +7,7 @@ import Confirm from '../screen/Confirm';
 import DropoffMap from '../screen/DropoffMap';
 import ForgotPassword from '../screen/ForgotPasswordScreen';
 import Home from '../screen/Home';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Login from '../screen/Login';
 import PhoneLogin from '../screen/PhoneLogin';
 import PickupMap from '../screen/PickupMap';
@@ -34,7 +37,13 @@ const BookingStack = createStackNavigator({
 });
 
 const AppStack = createBottomTabNavigator({
-  Home: Home,
+  Home: {
+    screen: Home,
+    navigationOptions: {
+      tabBarLabel: 'Home',
+      tabBarIcon: <IconButton icon="camera" color={Colors.red500} size={20} />,
+    },
+  },
   Booking: BookingStack,
   History: BookingList,
 });

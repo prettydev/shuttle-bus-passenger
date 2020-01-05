@@ -1,16 +1,27 @@
 import React, { ReactElement } from 'react';
-import { Button } from 'react-native-elements';
+import { Button } from 'react-native-paper';
+import { View } from 'react-native';
 
 const PrevNextButtons = (props): ReactElement => {
   return (
-    <>
-      <Button style={{ width: '30%' }} onPress={props.prevFunc}>
+    <View>
+      <Button
+        compact={true}
+        icon="camera"
+        mode="contained"
+        onPress={props.prevFunc}
+      >
         Prev
       </Button>
-      <Button style={{ width: '30%' }} onPress={props.nextFunc}>
+      <Button
+        compact={true}
+        icon="camera"
+        mode="contained"
+        onPress={props.nextFunc}
+      >
         {props.nextStr ? props.nextStr : 'Next'}
       </Button>
-    </>
+    </View>
   );
 };
 
