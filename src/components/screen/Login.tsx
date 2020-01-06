@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   },
   link: {
     fontWeight: 'bold',
-    color: theme.colors.primary,
+    color: theme.colors.icon,
   },
 });
 
@@ -147,7 +147,7 @@ function LoginScreen(props: Props): ReactElement {
         <Text style={{ color: theme.colors.error }}>{errorMsg}</Text>
       ) : null}
 
-      <Button mode="contained" onPress={_onLoginPressed}>
+      <Button mode="outlined" onPress={_onLoginPressed}>
         Login
       </Button>
 

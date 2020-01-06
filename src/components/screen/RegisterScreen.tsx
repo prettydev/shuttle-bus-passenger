@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
   link: {
     fontWeight: 'bold',
-    color: theme.colors.primary,
+    color: theme.colors.icon,
   },
 });
 
@@ -158,7 +158,7 @@ const RegisterScreen = ({ navigation }: Props): ReactElement => {
         secureTextEntry
       />
 
-      <Button mode="contained" onPress={_onSignUpPressed} style={styles.button}>
+      <Button mode="outlined" onPress={_onSignUpPressed} style={styles.button}>
         Sign Up
       </Button>
 

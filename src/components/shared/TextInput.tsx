@@ -26,8 +26,11 @@ const TextInput = ({ errorText, ...props }: Props): ReactElement => (
   <View style={styles.container}>
     <Input
       style={styles.input}
-      selectionColor={theme.colors.primary}
+      selectionColor={theme.colors.icon}
       underlineColor="transparent"
+      theme={{
+        colors: { primary: theme.colors.icon },
+      }}
       mode="outlined"
       {...props}
     />

@@ -108,7 +108,7 @@ const AppStack = createBottomTabNavigator({
   History: {
     screen: BookingList,
     navigationOptions: {
-      tabBarLabel: 'History',
+      tabBarLabel: 'My rides',
       tabBarIcon: (
         <IconButton icon="history" color={theme.colors.icon} size={20} />
       ),
@@ -124,7 +124,7 @@ export default createAppContainer(
       AuthCheck: AuthCheck,
     },
     {
-      initialRouteName: 'App', // 'AuthCheck',
+      initialRouteName: 'AuthCheck',
     },
   ),
 );
