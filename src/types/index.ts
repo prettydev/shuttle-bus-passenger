@@ -209,7 +209,8 @@ type StackParamList = {
   ForgotPassword: undefined;
   TripList: undefined;
   TripDetails: undefined;
-  ChatScreen: undefined;
+  ChatScreen: { driverId: string };
+  TrackingScreen: { driverId: string };
   PickupMap: undefined;
   DropoffMap: undefined;
   SelectTable: undefined;

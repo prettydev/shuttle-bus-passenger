@@ -6,13 +6,15 @@ import { theme } from '../core/theme';
 const PrevNextButtons = (props): ReactElement => {
   return (
     <View
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        width: '100%',
-        padding: 10,
-        justifyContent: 'space-around',
-      }}
+      style={[
+        {
+          flexDirection: 'row',
+          alignItems: 'center',
+          width: '100%',
+          padding: 10,
+          justifyContent: 'space-around',
+        },
+      ]}
     >
       <Button
         compact={true}

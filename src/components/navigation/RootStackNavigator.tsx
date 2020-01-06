@@ -15,6 +15,7 @@ import PickupMap from '../screen/PickupMap';
 import Preview from '../screen/Preview';
 import Register from '../screen/RegisterScreen';
 import SelectTable from '../screen/SelectTable';
+import TrackingScreen from '../screen/TrackingScreen';
 import TripDetails from '../screen/TripDetails';
 import TripList from '../screen/TripList';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
@@ -30,51 +31,57 @@ const AuthStack = createStackNavigator({
 
 const BookingStack = createStackNavigator({
   TripList: {
-    screen: TripList,
+    screen: SelectTable, // TripList,
     navigationOptions: ({ navigation }) => ({
-      title: 'TripList',
+      title: 'Trip list',
     }),
   },
   TripDetails: {
     screen: TripDetails,
     navigationOptions: ({ navigation }) => ({
-      title: 'TripDetails', // `${navigation.state.params.name}'s Details'`,
+      title: 'Trip details', // `${navigation.state.params.name}'s Details'`,
     }),
   },
   PickupMap: {
     screen: PickupMap,
     navigationOptions: ({ navigation }) => ({
-      title: 'PickupMap',
+      title: 'Select pickup place',
     }),
   },
   DropoffMap: {
     screen: DropoffMap,
     navigationOptions: ({ navigation }) => ({
-      title: 'DropoffMap',
+      title: 'Select dropoff place',
     }),
   },
   SelectTable: {
     screen: SelectTable,
     navigationOptions: ({ navigation }) => ({
-      title: 'SelectTable',
+      title: 'Select a seat',
     }),
   },
   Preview: {
     screen: Preview,
     navigationOptions: ({ navigation }) => ({
-      title: 'Preview',
+      title: 'Confirm your booking',
     }),
   },
   Confirm: {
     screen: Confirm,
     navigationOptions: ({ navigation }) => ({
-      title: 'Confirm',
+      title: 'Finish',
     }),
   },
   ChatScreen: {
     screen: ChatScreen,
     navigationOptions: ({ navigation }) => ({
-      title: 'ChatScreen',
+      title: 'Chat with driver',
+    }),
+  },
+  TrackingScreen: {
+    screen: TrackingScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Tracking a bus',
     }),
   },
 });

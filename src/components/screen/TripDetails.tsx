@@ -3,6 +3,7 @@ import {
   Caption,
   Card,
   Divider,
+  IconButton,
   Paragraph,
   Subheading,
   Surface,
@@ -19,6 +20,8 @@ import {
 import React, { ReactElement, useEffect, useState } from 'react';
 import PrevNextButtons from '../shared/PrevNextButtons';
 import { getTripDetails } from '../../apis/firebase';
+import { phone } from '../../apis/phone';
+import { theme } from '../core/theme';
 import { useAppContext } from '../../providers/AppProvider';
 
 interface Props {
@@ -97,8 +100,48 @@ function Page(props: Props): React.ReactElement {
   const render = (): ReactElement => {
     return (
       <>
-        <Title>{details && details.alias}</Title>
-
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: '100%',
+          }}
+        >
+          <Title>{details && details.alias}</Title>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <IconButton
+              icon="phone"
+              color={theme.colors.icon}
+              size={18}
+              onPress={(): void => phone(details.driverPhone)}
+            />
+            <IconButton
+              icon="chat"
+              color={theme.colors.icon}
+              size={18}
+              onPress={(): void =>
+                props.navigation.navigate('ChatScreen', {
+                  driverId: details.driverId,
+                })
+              }
+            />
+            <IconButton
+              icon="map-marker"
+              color={theme.colors.icon}
+              size={18}
+              onPress={(): void =>
+                props.navigation.navigate('TrackingScreen', {
+                  driverId: details.driverId,
+                })
+              }
+            />
+          </View>
+        </View>
         <Caption>Departure</Caption>
         <Text>{details && details.departureAddress}</Text>
 
@@ -113,45 +156,83 @@ function Page(props: Props): React.ReactElement {
 
         <Caption>Estimated Arrival Time</Caption>
         <Text>{details && details.estimatedArrivalTime}</Text>
+        <Divider />
         <Subheading>Vehicle</Subheading>
         <View style={{ flex: 1 }}>
           <View
-            style={{ flexDirection: 'row', justifyContent: 'space-around' }}
+            style={{
+              justifyContent: 'space-around',
+              paddingLeft: 10,
+              paddingRight: 10,
+            }}
           >
-            <View>
-              <Caption>Capacity</Caption>
-              <Text>{details && details.vehicleCapacity}</Text>
-            </View>
-            <View>
-              <Caption>Model</Caption>
-              <Text>{details && details.vehicleModel}</Text>
-            </View>
-            <View>
-              <Caption>Color</Caption>
-              <Text>{details && details.vehicleColor}</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+            >
+              <View>
+                <Caption>Capacity</Caption>
+                <Text>{details && details.vehicleCapacity}</Text>
+              </View>
+              <View>
+                <Caption>Model</Caption>
+                <Text>{details && details.vehicleModel}</Text>
+              </View>
+              <View>
+                <Caption>Color</Caption>
+                <Text>{details && details.vehicleColor}</Text>
+              </View>
             </View>
           </View>
           <View
-            style={{ flexDirection: 'row', justifyContent: 'space-around' }}
+            style={{
+              justifyContent: 'space-around',
+              paddingLeft: 10,
+              paddingRight: 10,
+            }}
           >
-            <View>
-              <Caption>Amenities</Caption>
-              <Text>{details && details.vehicleAmenities}</Text>
-            </View>
-            <View>
-              <Caption>LicensePlate</Caption>
-              <Text>{details && details.vehicleLicensePlate}</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+            >
+              <View>
+                <Caption>Amenities</Caption>
+                <Text>{details && details.vehicleAmenities}</Text>
+              </View>
+              <View>
+                <Caption>License plate</Caption>
+                <Text>{details && details.vehicleLicensePlate}</Text>
+              </View>
             </View>
           </View>
         </View>
-        <Caption>Driver</Caption>
-        <Text>{details && details.driverName}</Text>
+        <Divider />
+        <Subheading>Driver</Subheading>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+          <View>
+            <Caption>Driver name</Caption>
+            <Text>{details && details.driverName}</Text>
+          </View>
+          <View>
+            <Caption>Driver phone</Caption>
+            <Text>{details && details.driverPhone}</Text>
+          </View>
+        </View>
       </>
     );
   };
 
   return (
-    <View style={{ flex: 1, padding: 5 }}>
+    <View
+      style={{
+        flex: 1,
+        padding: 5,
+      }}
+    >
       {isLoading ? (
         <ActivityIndicator size="large" />
       ) : (
@@ -165,34 +246,35 @@ function Page(props: Props): React.ReactElement {
           >
             <ScrollView showsVerticalScrollIndicator={false}>
               {render()}
+              <Divider />
+              <PrevNextButtons
+                prevFunc={(): void => props.navigation.navigate('TripList')}
+                nextFunc={(): void => {
+                  const vehicle: Vehicle = {
+                    vehicleId: details.vehicleId,
+                    vehicleName: details.vehicleName,
+                    vehicleRow: details.vehicleRow,
+                    vehicleColumn: details.vehicleColumn,
+                    vehicleCapacity: details.vehicleCapacity,
+                    vehicleColor: details.vehicleColor,
+                    vehicleModel: details.vehicleModel,
+                    vehicleLicensePlate: details.vehicleLicensePlate,
+                    vehicleAmenities: details.vehicleAmenities,
+                  };
+                  setVehicle(vehicle);
+                  const driver: Driver = {
+                    driverId: details.driverId,
+                    driverName: details.driverName,
+                    driverPhone: details.driverPhone,
+                  };
+                  setDriver(driver);
+                  const newSeats: Seats = Object.assign({}, details.bookings);
+                  setSeats(newSeats);
+                  props.navigation.navigate('PickupMap');
+                }}
+              />
             </ScrollView>
           </Card>
-          <PrevNextButtons
-            prevFunc={(): void => props.navigation.navigate('TripList')}
-            nextFunc={(): void => {
-              const vehicle: Vehicle = {
-                vehicleId: details.vehicleId,
-                vehicleName: details.vehicleName,
-                vehicleRow: details.vehicleRow,
-                vehicleColumn: details.vehicleColumn,
-                vehicleCapacity: details.vehicleCapacity,
-                vehicleColor: details.vehicleColor,
-                vehicleModel: details.vehicleModel,
-                vehicleLicensePlate: details.vehicleLicensePlate,
-                vehicleAmenities: details.vehicleAmenities,
-              };
-              setVehicle(vehicle);
-              const driver: Driver = {
-                driverId: details.driverId,
-                driverName: details.driverName,
-                driverPhone: details.driverPhone,
-              };
-              setDriver(driver);
-              const newSeats: Seats = Object.assign({}, details.bookings);
-              setSeats(newSeats);
-              props.navigation.navigate('PickupMap');
-            }}
-          />
         </>
       )}
     </View>

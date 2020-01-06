@@ -18,8 +18,8 @@ import {
 } from 'react-native-paper';
 import { DefaultNavigationProps, Trip } from '../../types';
 import React, { ReactElement, useEffect, useState } from 'react';
-import call from 'react-native-phone-call';
 import { getTrips } from '../../apis/firebase';
+import { phone } from '../../apis/phone';
 import { theme } from '../core/theme';
 import { useAppContext } from '../../providers/AppProvider';
 
@@ -46,15 +46,6 @@ function Page(props: Props): React.ReactElement {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [trips, setTrips] = useState<TripItem[]>();
-
-  const phoneCall = (number: string): void => {
-    const args = {
-      number: number,
-      prompt: false,
-    };
-
-    call(args).catch(console.error);
-  };
 
   useEffect(() => {
     getTrips((res) => {
@@ -114,11 +105,7 @@ function Page(props: Props): React.ReactElement {
                 title={doc.alias}
                 description={doc.departureDatetime}
                 left={(props): ReactElement => (
-                  <List.Icon
-                    {...props}
-                    icon="folder"
-                    color={theme.colors.icon}
-                  />
+                  <List.Icon {...props} icon="bus" color={theme.colors.icon} />
                 )}
                 right={(): ReactElement => (
                   <>
@@ -126,20 +113,27 @@ function Page(props: Props): React.ReactElement {
                       icon="phone"
                       color={theme.colors.icon}
                       size={18}
-                      onPress={(): void => phoneCall(doc.driverPhone)}
+                      onPress={(): void => phone(doc.driverPhone)}
                     />
                     <IconButton
                       icon="chat"
                       color={theme.colors.icon}
                       size={18}
                       onPress={(): void =>
-                        props.navigation.navigate('ChatScreen')
+                        props.navigation.navigate('ChatScreen', {
+                          driverId: doc.driverId,
+                        })
                       }
                     />
                     <IconButton
                       icon="map-marker"
                       color={theme.colors.icon}
                       size={18}
+                      onPress={(): void =>
+                        props.navigation.navigate('TrackingScreen', {
+                          driverId: doc.driverId,
+                        })
+                      }
                     />
                   </>
                 )}
@@ -153,7 +147,7 @@ function Page(props: Props): React.ReactElement {
   return (
     <>
       {isLoading ? (
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size="large" style={{ alignItems: 'center' }} />
       ) : (
         <ScrollView showsVerticalScrollIndicator={false}>
           {renderList()}

@@ -2,9 +2,17 @@ import {
   ActivityIndicator,
   Dimensions,
   ScrollView,
-  Text,
   TouchableOpacity,
+  View,
 } from 'react-native';
+import {
+  Badge,
+  Button,
+  Card,
+  Divider,
+  IconButton,
+  Text,
+} from 'react-native-paper';
 import {
   CurrentSeat,
   DefaultNavigationProps,
@@ -14,8 +22,8 @@ import {
   Vehicle,
 } from '../../types';
 import React, { ReactElement, useEffect, useState } from 'react';
-import { Card } from 'react-native-paper';
 import PrevNextButtons from '../shared/PrevNextButtons';
+import { theme } from '../core/theme';
 import { updateSeatOfTrip } from '../../apis/firebase';
 import { useAppContext } from '../../providers/AppProvider';
 
@@ -32,11 +40,24 @@ function Page(props: Props): React.ReactElement {
     setSeats,
   } = useAppContext();
 
-  const rowCnt = booking.vehicle.vehicleRow.charCodeAt(0) - 64;
-  const colCnt = booking.vehicle.vehicleColumn;
+  let rowCnt = booking.vehicle.vehicleRow.charCodeAt(0) - 64;
+  let colCnt = booking.vehicle.vehicleColumn;
+
+  if (isNaN(rowCnt) || rowCnt === 0) {
+    rowCnt = 10;
+  }
+  if (isNaN(colCnt) || colCnt === 0) {
+    colCnt = 4;
+  }
+
+  console.log('rowCnt===', rowCnt);
+  console.log('colCnt===', colCnt);
 
   const rowArr = [...Array(rowCnt).keys()];
   const colArr = [...Array(colCnt).keys()];
+
+  console.log('rowArr==', rowArr);
+  console.log('colArr', colArr);
 
   const selectSeat = (r: number, c: number): void => {
     const seatId = String.fromCharCode(r + 65) + (c + 1);
@@ -66,36 +87,54 @@ function Page(props: Props): React.ReactElement {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      {rowArr.map((row, i) => {
-        colArr.map((column, j) => (
-          <TouchableOpacity
-            key={i * colCnt + j + 1}
-            onPress={(): void => {
-              selectSeat(i, j);
-            }}
-          >
-            <Card>
-              <Card.Title
-                title={
-                  String.fromCharCode(i + 65) +
-                  (j + 1) +
-                  '(' +
-                  (i * colCnt + j + 1) +
-                  ')' +
-                  seats[String.fromCharCode(i + 65) + (j + 1)].seatState
-                }
-                // titleColor={
-                //   seats[String.fromCharCode(i + 65) + (j + 1)].seatState === 0
-                //     ? 'pink'
-                //     : seats[String.fromCharCode(i + 65) + (j + 1)].seatState === 1
-                //     ? 'blue'
-                //     : 'green'
-                // }
-              />
-            </Card>
-          </TouchableOpacity>
-        ));
-      })}
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: '52%',
+            paddingLeft: 40,
+          }}
+        >
+          {colArr.map((col, j) => (
+            <Badge size={25}>{j + 1}</Badge>
+          ))}
+        </View>
+        {rowArr.map((row, i) => {
+          return (
+            <View
+              key={i}
+              style={{ flexDirection: 'row', alignItems: 'center' }}
+            >
+              <Badge size={25} style={{ marginBottom: 10, marginRight: 20 }}>
+                {String.fromCharCode(i + 65)}
+              </Badge>
+              {colArr.map((col, j) => {
+                return (
+                  <IconButton
+                    key={i * colCnt + j + 1}
+                    icon="seat-outline"
+                    color={
+                      seats[String.fromCharCode(i + 65) + (j + 1)].seatState ===
+                      0
+                        ? theme.colors.icon
+                        : seats[String.fromCharCode(i + 65) + (j + 1)]
+                            .seatState === 1
+                        ? theme.colors.selected
+                        : theme.colors.booked
+                    }
+                    size={25}
+                    onPress={(): void => selectSeat(i, j)}
+                  >
+                    {String.fromCharCode(i + 65)}
+                  </IconButton>
+                );
+              })}
+            </View>
+          );
+        })}
+      </View>
+      <Divider />
       <PrevNextButtons
         prevFunc={(): void => props.navigation.navigate('DropoffMap')}
         nextFunc={(): void => props.navigation.navigate('Preview')}
