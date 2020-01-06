@@ -18,6 +18,7 @@ import TripDetails from '../screen/TripDetails';
 import TripList from '../screen/TripList';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
+import { theme } from '../core/theme';
 
 const AuthStack = createStackNavigator({
   Login: Login,
@@ -41,11 +42,29 @@ const AppStack = createBottomTabNavigator({
     screen: Home,
     navigationOptions: {
       tabBarLabel: 'Home',
-      tabBarIcon: <IconButton icon="camera" color={Colors.red500} size={20} />,
+      tabBarIcon: (
+        <IconButton icon="ticket" color={theme.colors.icon} size={20} />
+      ),
     },
   },
-  Booking: BookingStack,
-  History: BookingList,
+  Booking: {
+    screen: BookingStack,
+    navigationOptions: {
+      tabBarLabel: 'Booking',
+      tabBarIcon: (
+        <IconButton icon="bus-clock" color={theme.colors.icon} size={20} />
+      ),
+    },
+  },
+  History: {
+    screen: BookingList,
+    navigationOptions: {
+      tabBarLabel: 'History',
+      tabBarIcon: (
+        <IconButton icon="history" color={theme.colors.icon} size={20} />
+      ),
+    },
+  },
 });
 
 export default createAppContainer(
@@ -56,7 +75,7 @@ export default createAppContainer(
       AuthCheck: AuthCheck,
     },
     {
-      initialRouteName: 'AuthCheck',
+      initialRouteName: 'App', // 'AuthCheck',
     },
   ),
 );

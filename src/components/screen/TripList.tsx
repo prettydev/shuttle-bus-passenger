@@ -5,11 +5,21 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import { Avatar, Button, Card, Paragraph, Title } from 'react-native-paper';
+import {
+  Avatar,
+  Button,
+  Card,
+  IconButton,
+  List,
+  Paragraph,
+  Surface,
+  Title,
+} from 'react-native-paper';
 import { DefaultNavigationProps, Trip } from '../../types';
 import React, { ReactElement, useEffect, useState } from 'react';
-
+import call from 'react-native-phone-call';
 import { getTrips } from '../../apis/firebase';
+import { theme } from '../core/theme';
 import { useAppContext } from '../../providers/AppProvider';
 
 interface Props {
@@ -20,6 +30,7 @@ const { width } = Dimensions.get('screen');
 interface TripItem {
   key: string;
   driverId: string;
+  driverPhone: string;
   vehicleId: string;
   alias: string;
   departureDatetime: string;
@@ -35,6 +46,15 @@ function Page(props: Props): React.ReactElement {
 
   const [trips, setTrips] = useState<TripItem[]>();
 
+  const phoneCall = (number: string): void => {
+    const args = {
+      number: number,
+      prompt: false,
+    };
+
+    call(args).catch(console.error);
+  };
+
   useEffect(() => {
     getTrips((res) => {
       const list: TripItem[] = [];
@@ -46,6 +66,7 @@ function Page(props: Props): React.ReactElement {
           destinationAddress,
           estimatedArrivalTime,
           driverId,
+          driverPhone,
           vehicleId,
         } = doc.data();
         list.push({
@@ -56,6 +77,7 @@ function Page(props: Props): React.ReactElement {
           destinationAddress,
           estimatedArrivalTime,
           driverId,
+          driverPhone,
           vehicleId,
         });
       });
@@ -83,19 +105,37 @@ function Page(props: Props): React.ReactElement {
               }}
             >
               <Card>
-                <Card.Title
+                <List.Item
                   title={doc.alias}
-                  subtitle={doc.departureDatetime}
+                  description={doc.departureDatetime}
                   left={(props): ReactElement => (
-                    <Avatar.Icon {...props} icon="folder" />
+                    <List.Icon
+                      {...props}
+                      icon="folder"
+                      color={theme.colors.icon}
+                    />
+                  )}
+                  right={(props): ReactElement => (
+                    <>
+                      <IconButton
+                        icon="phone"
+                        color={theme.colors.icon}
+                        size={18}
+                        onPress={(): void => phoneCall(doc.driverPhone)}
+                      />
+                      <IconButton
+                        icon="chat"
+                        color={theme.colors.icon}
+                        size={18}
+                      />
+                      <IconButton
+                        icon="map-marker"
+                        color={theme.colors.icon}
+                        size={18}
+                      />
+                    </>
                   )}
                 />
-                <Card.Actions style={{ alignContent: 'flex-end' }}>
-                  <Button>Call</Button>
-                  <Button>Sms</Button>
-                  <Button>Chat</Button>
-                  <Button>Tracking</Button>
-                </Card.Actions>
               </Card>
             </TouchableOpacity>
           ))}

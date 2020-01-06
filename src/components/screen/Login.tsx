@@ -106,8 +106,6 @@ function LoginScreen(props: Props): ReactElement {
         <Text style={styles.label}>email:test@test.com, pass:123123</Text>
       </TouchableOpacity>
 
-      <Button icon="account">Press me</Button>
-
       <TextInput
         label="Email"
         returnKeyType="next"
