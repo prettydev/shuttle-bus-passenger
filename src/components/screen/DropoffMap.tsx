@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import Geolocation from 'react-native-geolocation-service';
 import PrevNextButtons from '../shared/PrevNextButtons';
 import Styled from 'styled-components/native';
-import { Text } from 'react-native-elements';
 import { useAppContext } from '../../providers/AppProvider';
 
 interface Props {

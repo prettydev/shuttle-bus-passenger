@@ -1,12 +1,11 @@
-import { Block, Button, Card, Text, theme } from 'react-native-elements';
 import { DefaultNavigationProps, Pickup } from '../../types';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import React, { useEffect, useState } from 'react';
 import Geolocation from 'react-native-geolocation-service';
 import PrevNextButtons from '../shared/PrevNextButtons';
 import Styled from 'styled-components/native';
-import { useAppContext } from '../../providers/AppProvider';
 import { getBookings } from '../../apis/firebase';
+import { useAppContext } from '../../providers/AppProvider';
 
 interface Props {
   navigation: DefaultNavigationProps<'Home'>;

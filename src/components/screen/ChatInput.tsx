@@ -10,7 +10,7 @@ import React, { ReactElement, useCallback, useContext, useState } from 'react';
 import { createMessage, fetchMessages, getMessage } from '../../apis/firebase';
 import { Button } from 'react-native-paper';
 import { COLORS } from './ChatStyles';
-
+import { theme } from '../core/theme';
 import { useAppContext } from '../../providers/AppProvider';
 
 const styles = StyleSheet.create({
@@ -65,7 +65,12 @@ export default function Input(): ReactElement {
       </View>
 
       {!isLoading && (
-        <Button mode="outlined" onPress={handlePress}>
+        <Button
+          icon="send"
+          mode="outlined"
+          onPress={handlePress}
+          color={theme.colors.icon}
+        >
           Send
         </Button>
       )}

@@ -29,14 +29,54 @@ const AuthStack = createStackNavigator({
 });
 
 const BookingStack = createStackNavigator({
-  TripList: TripList,
-  TripDetails: TripDetails,
-  PickupMap: PickupMap,
-  DropoffMap: DropoffMap,
-  SelectTable: SelectTable,
-  Preview: Preview,
-  Confirm: Confirm,
-  ChatScreen: ChatScreen,
+  TripList: {
+    screen: TripList,
+    navigationOptions: ({ navigation }) => ({
+      title: 'TripList',
+    }),
+  },
+  TripDetails: {
+    screen: TripDetails,
+    navigationOptions: ({ navigation }) => ({
+      title: 'TripDetails', // `${navigation.state.params.name}'s Details'`,
+    }),
+  },
+  PickupMap: {
+    screen: PickupMap,
+    navigationOptions: ({ navigation }) => ({
+      title: 'PickupMap',
+    }),
+  },
+  DropoffMap: {
+    screen: DropoffMap,
+    navigationOptions: ({ navigation }) => ({
+      title: 'DropoffMap',
+    }),
+  },
+  SelectTable: {
+    screen: SelectTable,
+    navigationOptions: ({ navigation }) => ({
+      title: 'SelectTable',
+    }),
+  },
+  Preview: {
+    screen: Preview,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Preview',
+    }),
+  },
+  Confirm: {
+    screen: Confirm,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Confirm',
+    }),
+  },
+  ChatScreen: {
+    screen: ChatScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: 'ChatScreen',
+    }),
+  },
 });
 
 const AppStack = createBottomTabNavigator({
@@ -77,7 +117,7 @@ export default createAppContainer(
       AuthCheck: AuthCheck,
     },
     {
-      initialRouteName: 'AuthCheck',
+      initialRouteName: 'App', // 'AuthCheck',
     },
   ),
 );

@@ -3,6 +3,7 @@ import {
   Dimensions,
   ScrollView,
   TouchableOpacity,
+  View,
 } from 'react-native';
 
 import {
@@ -89,11 +90,16 @@ function Page(props: Props): React.ReactElement {
 
   const renderList = (): ReactElement => {
     return (
-      <>
+      <View style={{ flex: 1, padding: 5 }}>
         {trips &&
           trips.map((doc, i) => (
-            <TouchableOpacity
+            <Card
               key={i}
+              style={{
+                padding: 5,
+                margin: 5,
+                justifyContent: 'center',
+              }}
               onPress={(): void => {
                 const trip: Trip = {
                   tripId: doc.key,
@@ -104,45 +110,43 @@ function Page(props: Props): React.ReactElement {
                 props.navigation.navigate('TripDetails');
               }}
             >
-              <Card>
-                <List.Item
-                  title={doc.alias}
-                  description={doc.departureDatetime}
-                  left={(props): ReactElement => (
-                    <List.Icon
-                      {...props}
-                      icon="folder"
+              <List.Item
+                title={doc.alias}
+                description={doc.departureDatetime}
+                left={(props): ReactElement => (
+                  <List.Icon
+                    {...props}
+                    icon="folder"
+                    color={theme.colors.icon}
+                  />
+                )}
+                right={(): ReactElement => (
+                  <>
+                    <IconButton
+                      icon="phone"
                       color={theme.colors.icon}
+                      size={18}
+                      onPress={(): void => phoneCall(doc.driverPhone)}
                     />
-                  )}
-                  right={(): ReactElement => (
-                    <>
-                      <IconButton
-                        icon="phone"
-                        color={theme.colors.icon}
-                        size={18}
-                        onPress={(): void => phoneCall(doc.driverPhone)}
-                      />
-                      <IconButton
-                        icon="chat"
-                        color={theme.colors.icon}
-                        size={18}
-                        onPress={(): void =>
-                          props.navigation.navigate('ChatScreen')
-                        }
-                      />
-                      <IconButton
-                        icon="map-marker"
-                        color={theme.colors.icon}
-                        size={18}
-                      />
-                    </>
-                  )}
-                />
-              </Card>
-            </TouchableOpacity>
+                    <IconButton
+                      icon="chat"
+                      color={theme.colors.icon}
+                      size={18}
+                      onPress={(): void =>
+                        props.navigation.navigate('ChatScreen')
+                      }
+                    />
+                    <IconButton
+                      icon="map-marker"
+                      color={theme.colors.icon}
+                      size={18}
+                    />
+                  </>
+                )}
+              />
+            </Card>
           ))}
-      </>
+      </View>
     );
   };
 

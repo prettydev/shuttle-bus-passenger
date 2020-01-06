@@ -1,10 +1,14 @@
+import { ActivityIndicator, Dimensions, ScrollView, View } from 'react-native';
 import {
-  ActivityIndicator,
-  Dimensions,
-  ScrollView,
+  Caption,
+  Card,
+  Divider,
+  Paragraph,
+  Subheading,
+  Surface,
   Text,
-  View,
-} from 'react-native';
+  Title,
+} from 'react-native-paper';
 import {
   DefaultNavigationProps,
   Driver,
@@ -93,52 +97,76 @@ function Page(props: Props): React.ReactElement {
   const render = (): ReactElement => {
     return (
       <>
-        <Text>{details && details.alias}</Text>
+        <Title>{details && details.alias}</Title>
 
-        <Text>Departure</Text>
+        <Caption>Departure</Caption>
         <Text>{details && details.departureAddress}</Text>
 
-        <Text>Destination</Text>
+        <Caption>Destination</Caption>
         <Text>{details && details.destinationAddress}</Text>
 
-        <Text>Routes</Text>
+        <Caption>Routes</Caption>
         <Text>{details && details.routes}</Text>
 
-        <Text>Departure Datetime</Text>
+        <Caption>Departure Datetime</Caption>
         <Text>{details && details.departureDatetime}</Text>
 
-        <Text>Estimated Arrival Time</Text>
+        <Caption>Estimated Arrival Time</Caption>
         <Text>{details && details.estimatedArrivalTime}</Text>
-
-        <Text>Vehicle</Text>
-        <Text>Capacity</Text>
-        <Text>{details && details.vehicleCapacity}</Text>
-        <Text>Model</Text>
-        <Text>{details && details.vehicleModel}</Text>
-
-        <Text>Color</Text>
-        <Text>{details && details.vehicleColor}</Text>
-
-        <Text>Amenities</Text>
-        <Text>{details && details.vehicleAmenities}</Text>
-
-        <Text>LicensePlate</Text>
-        <Text>{details && details.vehicleLicensePlate}</Text>
-
-        <Text>Driver</Text>
-        <Text>{details && details.driverId}</Text>
+        <Subheading>Vehicle</Subheading>
+        <View style={{ flex: 1 }}>
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'space-around' }}
+          >
+            <View>
+              <Caption>Capacity</Caption>
+              <Text>{details && details.vehicleCapacity}</Text>
+            </View>
+            <View>
+              <Caption>Model</Caption>
+              <Text>{details && details.vehicleModel}</Text>
+            </View>
+            <View>
+              <Caption>Color</Caption>
+              <Text>{details && details.vehicleColor}</Text>
+            </View>
+          </View>
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'space-around' }}
+          >
+            <View>
+              <Caption>Amenities</Caption>
+              <Text>{details && details.vehicleAmenities}</Text>
+            </View>
+            <View>
+              <Caption>LicensePlate</Caption>
+              <Text>{details && details.vehicleLicensePlate}</Text>
+            </View>
+          </View>
+        </View>
+        <Caption>Driver</Caption>
+        <Text>{details && details.driverName}</Text>
       </>
     );
   };
 
   return (
-    <View>
+    <View style={{ flex: 1, padding: 5 }}>
       {isLoading ? (
         <ActivityIndicator size="large" />
       ) : (
-        <ScrollView showsVerticalScrollIndicator={false}>
-          {render()}
-
+        <>
+          <Card
+            style={{
+              padding: 20,
+              margin: 5,
+              justifyContent: 'center',
+            }}
+          >
+            <ScrollView showsVerticalScrollIndicator={false}>
+              {render()}
+            </ScrollView>
+          </Card>
           <PrevNextButtons
             prevFunc={(): void => props.navigation.navigate('TripList')}
             nextFunc={(): void => {
@@ -165,7 +193,7 @@ function Page(props: Props): React.ReactElement {
               props.navigation.navigate('PickupMap');
             }}
           />
-        </ScrollView>
+        </>
       )}
     </View>
   );
