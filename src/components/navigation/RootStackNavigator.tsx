@@ -3,6 +3,7 @@ import React, { ReactElement } from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import AuthCheck from '../screen/AuthCheck';
 import BookingList from '../screen/BookingList';
+import ChatScreen from '../screen/ChatScreen';
 import Confirm from '../screen/Confirm';
 import DropoffMap from '../screen/DropoffMap';
 import ForgotPassword from '../screen/ForgotPasswordScreen';
@@ -35,6 +36,7 @@ const BookingStack = createStackNavigator({
   SelectTable: SelectTable,
   Preview: Preview,
   Confirm: Confirm,
+  ChatScreen: ChatScreen,
 });
 
 const AppStack = createBottomTabNavigator({

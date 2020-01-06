@@ -115,7 +115,7 @@ function Page(props: Props): React.ReactElement {
                       color={theme.colors.icon}
                     />
                   )}
-                  right={(props): ReactElement => (
+                  right={(): ReactElement => (
                     <>
                       <IconButton
                         icon="phone"
@@ -127,6 +127,9 @@ function Page(props: Props): React.ReactElement {
                         icon="chat"
                         color={theme.colors.icon}
                         size={18}
+                        onPress={(): void =>
+                          props.navigation.navigate('ChatScreen')
+                        }
                       />
                       <IconButton
                         icon="map-marker"

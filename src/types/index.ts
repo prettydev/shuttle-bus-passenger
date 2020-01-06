@@ -209,6 +209,7 @@ type StackParamList = {
   ForgotPassword: undefined;
   TripList: undefined;
   TripDetails: undefined;
+  ChatScreen: undefined;
   PickupMap: undefined;
   DropoffMap: undefined;
   SelectTable: undefined;

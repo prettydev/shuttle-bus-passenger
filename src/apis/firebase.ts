@@ -44,6 +44,7 @@ const riders = firebase.firestore().collection('riders');
 const trips = firebase.firestore().collection('trips');
 const vehicles = firebase.firestore().collection('vehicles');
 const bookings = firebase.firestore().collection('bookings');
+const messages = firebase.firestore().collection('messages');
 
 // auth
 export const loginWithEmail = (email: string, password: string): any => {
@@ -168,3 +169,31 @@ export const createNewBooking = (doc, callback): Promise<Response> => {
 export const getBookings = (callback): any => {
   bookings.onSnapshot(callback);
 };
+
+/// ////////////////////////////////////////////////////////////
+
+export async function fetchMessages(): Promise<any> {
+  const results = await messages
+    .orderBy('createdAt', 'desc')
+    .limit(10)
+    .get();
+
+  return results.docs;
+}
+
+export async function addMessage(callback): Promise<any> {
+  return messages.orderBy('created_at', 'desc').onSnapshot(function(snapshot) {
+    callback(snapshot);
+  });
+}
+
+export async function createMessage({ message, uid }): Promise<any> {
+  const createdAt = firebase.firestore.FieldValue.serverTimestamp();
+  await messages.add({
+    message,
+    userId: uid,
+    createdAt: createdAt,
+  });
+}
+
+/// ////////////////////////////////////////////////////////////
