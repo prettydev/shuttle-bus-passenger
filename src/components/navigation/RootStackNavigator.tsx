@@ -7,6 +7,7 @@ import ChatScreen from '../screen/ChatScreen';
 import Confirm from '../screen/Confirm';
 import DropoffMap from '../screen/DropoffMap';
 import ForgotPassword from '../screen/ForgotPasswordScreen';
+import HelpScreen from '../screen/HelpScreen';
 import Home from '../screen/Home';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Login from '../screen/Login';
@@ -114,6 +115,19 @@ const AppStack = createBottomTabNavigator({
       ),
     },
   },
+  Help: {
+    screen: HelpScreen,
+    navigationOptions: {
+      tabBarLabel: 'Help',
+      tabBarIcon: (
+        <IconButton
+          icon="account-question-outline"
+          color={theme.colors.icon}
+          size={20}
+        />
+      ),
+    },
+  },
 });
 
 export default createAppContainer(
@@ -124,7 +138,7 @@ export default createAppContainer(
       AuthCheck: AuthCheck,
     },
     {
-      initialRouteName: 'AuthCheck',
+      initialRouteName: 'App', // 'AuthCheck',
     },
   ),
 );

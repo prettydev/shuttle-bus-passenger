@@ -1,7 +1,7 @@
-import { ActivityIndicator, AsyncStorage, StatusBar, View } from 'react-native';
+import { AsyncStorage, StatusBar, View } from 'react-native';
 import React, { useEffect } from 'react';
 import { DefaultRootNavigationProps } from '../../types';
-
+import Loader from '../shared/Loader';
 interface Props {
   navigation: DefaultRootNavigationProps<'App'>;
 }
@@ -20,7 +20,7 @@ function Page(props: Props): React.ReactElement {
 
   return (
     <View>
-      <ActivityIndicator size="large" />
+      <Loader />
       <StatusBar barStyle="default" />
     </View>
   );

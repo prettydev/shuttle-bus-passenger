@@ -1,11 +1,4 @@
 import {
-  ActivityIndicator,
-  Dimensions,
-  ScrollView,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import {
   Badge,
   Button,
   Card,
@@ -21,7 +14,9 @@ import {
   Seats,
   Vehicle,
 } from '../../types';
+import { Dimensions, ScrollView, TouchableOpacity, View } from 'react-native';
 import React, { ReactElement, useEffect, useState } from 'react';
+import Loader from '../shared/Loader';
 import PrevNextButtons from '../shared/PrevNextButtons';
 import { theme } from '../core/theme';
 import { updateSeatOfTrip } from '../../apis/firebase';

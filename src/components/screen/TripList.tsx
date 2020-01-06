@@ -1,12 +1,4 @@
 import {
-  ActivityIndicator,
-  Dimensions,
-  ScrollView,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-
-import {
   Avatar,
   Button,
   Card,
@@ -17,7 +9,9 @@ import {
   Title,
 } from 'react-native-paper';
 import { DefaultNavigationProps, Trip } from '../../types';
+import { Dimensions, ScrollView, View } from 'react-native';
 import React, { ReactElement, useEffect, useState } from 'react';
+import Loader from '../shared/Loader';
 import { getTrips } from '../../apis/firebase';
 import { phone } from '../../apis/phone';
 import { theme } from '../core/theme';
@@ -147,7 +141,7 @@ function Page(props: Props): React.ReactElement {
   return (
     <>
       {isLoading ? (
-        <ActivityIndicator size="large" style={{ alignItems: 'center' }} />
+        <Loader />
       ) : (
         <ScrollView showsVerticalScrollIndicator={false}>
           {renderList()}

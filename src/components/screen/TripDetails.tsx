@@ -1,4 +1,3 @@
-import { ActivityIndicator, Dimensions, ScrollView, View } from 'react-native';
 import {
   Caption,
   Card,
@@ -17,7 +16,9 @@ import {
   Vehicle,
   initSeats,
 } from '../../types';
+import { Dimensions, ScrollView, View } from 'react-native';
 import React, { ReactElement, useEffect, useState } from 'react';
+import Loader from '../shared/Loader';
 import PrevNextButtons from '../shared/PrevNextButtons';
 import { getTripDetails } from '../../apis/firebase';
 import { phone } from '../../apis/phone';
@@ -235,11 +236,12 @@ function Page(props: Props): React.ReactElement {
       }}
     >
       {isLoading ? (
-        <ActivityIndicator size="large" />
+        <Loader />
       ) : (
-        <ScrollView showsVerticalScrollIndicator={false}>
-          {render()}
-          <Divider />
+        <>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            {render()}
+          </ScrollView>
           <PrevNextButtons
             prevFunc={(): void => props.navigation.navigate('TripList')}
             nextFunc={(): void => {
@@ -266,7 +268,7 @@ function Page(props: Props): React.ReactElement {
               props.navigation.navigate('PickupMap');
             }}
           />
-        </ScrollView>
+        </>
       )}
     </Card>
   );

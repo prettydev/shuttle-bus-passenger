@@ -14,6 +14,7 @@ const PrevNextButtons = (props): ReactElement => {
           padding: 10,
           justifyContent: 'space-around',
         },
+        { ...props.style },
       ]}
     >
       <Button

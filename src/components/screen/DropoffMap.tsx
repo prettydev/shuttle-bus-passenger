@@ -93,6 +93,7 @@ function Page(props: Props): React.ReactElement {
       )}
 
       <PrevNextButtons
+        style={{ position: 'absolute', bottom: 0 }}
         prevFunc={(): void => props.navigation.navigate('PickupMap')}
         nextFunc={(): void => props.navigation.navigate('SelectTable')}
       />

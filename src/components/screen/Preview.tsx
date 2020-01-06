@@ -1,4 +1,3 @@
-import { ActivityIndicator, Dimensions, ScrollView, View } from 'react-native';
 import {
   Caption,
   Card,
@@ -18,8 +17,10 @@ import {
   Vehicle,
   initSeats,
 } from '../../types';
+import { Dimensions, ScrollView, View } from 'react-native';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { createNewBooking, updateSeatOfTrip } from '../../apis/firebase';
+import Loader from '../shared/Loader';
 import PrevNextButtons from '../shared/PrevNextButtons';
 import { useAppContext } from '../../providers/AppProvider';
 
@@ -155,34 +156,33 @@ function Page(props: Props): React.ReactElement {
   };
 
   return (
-    <Card
-      style={{
-        padding: 20,
-        margin: 10,
-        justifyContent: 'center',
-      }}
-    >
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {render()}
-        <Divider />
-        <PrevNextButtons
-          nextStr={'Confirm'}
-          prevFunc={(): void => props.navigation.navigate('SelectTable')}
-          nextFunc={(): void => {
-            const currentSeat: CurrentSeat = {
-              seatId: booking.seat.seatId,
-              seatState: 2,
-            };
-            setSeat(currentSeat);
-            createNewBooking(booking, (doc) => {
-              updateSeatOfTrip(booking.trip.tripId, booking.seat, () => {
-                props.navigation.navigate('Confirm');
-              });
+    <>
+      <Card
+        style={{
+          padding: 20,
+          margin: 10,
+          justifyContent: 'center',
+        }}
+      >
+        <ScrollView showsVerticalScrollIndicator={false}>{render()}</ScrollView>
+      </Card>
+      <PrevNextButtons
+        nextStr={'Confirm'}
+        prevFunc={(): void => props.navigation.navigate('SelectTable')}
+        nextFunc={(): void => {
+          const currentSeat: CurrentSeat = {
+            seatId: booking.seat.seatId,
+            seatState: 2,
+          };
+          setSeat(currentSeat);
+          createNewBooking(booking, (doc) => {
+            updateSeatOfTrip(booking.trip.tripId, booking.seat, () => {
+              props.navigation.navigate('Confirm');
             });
-          }}
-        />
-      </ScrollView>
-    </Card>
+          });
+        }}
+      />
+    </>
   );
 }
 

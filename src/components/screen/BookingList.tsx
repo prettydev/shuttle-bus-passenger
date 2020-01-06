@@ -1,42 +1,208 @@
-import Button from '../shared/Button';
-import { DefaultNavigationProps } from '../../types';
-import React from 'react';
-import { Text } from 'react-native';
-import styled from 'styled-components/native';
+import {
+  Avatar,
+  Button,
+  Card,
+  IconButton,
+  List,
+  Paragraph,
+  Surface,
+  Title,
+} from 'react-native-paper';
+import { DefaultNavigationProps, Trip } from '../../types';
+import { Dimensions, ScrollView, View } from 'react-native';
+import React, { ReactElement, useEffect, useState } from 'react';
+import Loader from '../shared/Loader';
+import { getBookings } from '../../apis/firebase';
+import { phone } from '../../apis/phone';
+import { theme } from '../core/theme';
 import { useAppContext } from '../../providers/AppProvider';
-
-const Container = styled.View`
-  flex: 1;
-  background-color: ${(props): string => props.theme.background};
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-`;
 
 interface Props {
   navigation: DefaultNavigationProps<'Home'>;
 }
 
+const { width } = Dimensions.get('screen');
+interface BookingItem {
+  key: string;
+
+  tripId: string;
+  tripAlias: string;
+
+  driverId: string;
+  driverPhone: string;
+
+  vehicleId: string;
+  vehicleName: string;
+  vehicleLicensePlate: string;
+
+  pickupAddress: string;
+  pickupLatitude: string;
+  pickupLongitude: string;
+
+  dropoffAddress: string;
+  dropoffLatitude: string;
+  dropoffLongitude: string;
+
+  seatId: string;
+  createdAt: Datetime;
+
+  state: number;
+}
+
 function Page(props: Props): React.ReactElement {
-  const {
-    state: { user, booking },
-    setUser,
-    setTrip,
-  } = useAppContext();
+  const { setTrip } = useAppContext();
+
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const [bookings, setBookings] = useState<BookingItem[]>();
+
+  useEffect(() => {
+    getBookings((res) => {
+      const list: BookingItem[] = [];
+      res.forEach((doc) => {
+        const {
+          tripId,
+          tripAlias,
+
+          driverId,
+          driverPhone,
+
+          vehicleId,
+          vehicleName,
+          vehicleLicensePlate,
+
+          pickupAddress,
+          pickupLatitude,
+          pickupLongitude,
+
+          dropoffAddress,
+          dropoffLatitude,
+          dropoffLongitude,
+
+          seatId,
+          createdAt,
+
+          state,
+        } = doc.data();
+        list.push({
+          key: doc.id,
+          tripId,
+          tripAlias,
+
+          driverId,
+          driverPhone,
+
+          vehicleId,
+          vehicleName,
+          vehicleLicensePlate,
+
+          pickupAddress,
+          pickupLatitude,
+          pickupLongitude,
+
+          dropoffAddress,
+          dropoffLatitude,
+          dropoffLongitude,
+
+          seatId,
+          createdAt,
+
+          state,
+        });
+      });
+
+      setBookings(list);
+      setIsLoading(false);
+    });
+  });
+
+  const renderList = (): ReactElement => {
+    return (
+      <View style={{ flex: 1, padding: 5 }}>
+        {bookings &&
+          bookings.map((doc, i) => (
+            <Card
+              key={i}
+              style={{
+                padding: 5,
+                margin: 5,
+                justifyContent: 'center',
+              }}
+            >
+              <List.Item
+                title={doc.tripAlias}
+                // description={doc.createdAt}
+                description={
+                  doc.state === 0
+                    ? 'Upcoming'
+                    : doc.state === 1
+                    ? 'Traveling now'
+                    : 'Completed'
+                }
+                left={(props): ReactElement => (
+                  <List.Icon
+                    {...props}
+                    icon={
+                      doc.state === 0
+                        ? 'ticket'
+                        : doc.state === 1
+                        ? 'ticket-confirmation'
+                        : 'ticket-outline'
+                    }
+                    color={theme.colors.icon}
+                  />
+                )}
+                right={(): ReactElement =>
+                  doc.state === 0 ? (
+                    <>
+                      <IconButton
+                        icon="phone"
+                        color={theme.colors.icon}
+                        size={18}
+                        onPress={(): void => phone(doc.driverPhone)}
+                      />
+                      <IconButton
+                        icon="chat"
+                        color={theme.colors.icon}
+                        size={18}
+                        onPress={(): void =>
+                          props.navigation.navigate('ChatScreen', {
+                            driverId: doc.driverId,
+                          })
+                        }
+                      />
+                      <IconButton
+                        icon="map-marker"
+                        color={theme.colors.icon}
+                        size={18}
+                        onPress={(): void =>
+                          props.navigation.navigate('TrackingScreen', {
+                            driverId: doc.driverId,
+                          })
+                        }
+                      />
+                    </>
+                  ) : (
+                    <></>
+                  )
+                }
+              />
+            </Card>
+          ))}
+      </View>
+    );
+  };
 
   return (
-    <Container>
-      <Text>{user ? user.userId : ''}</Text>
-      <Text>{'BOOOOOOOOOOOOOOOOOOOking'}</Text>
-      <Button
-        testID="btn"
-        onClick={(): void => props.navigation.goBack()}
-        text="Go Back"
-        style={{
-          backgroundColor: '#333333',
-        }}
-      />
-    </Container>
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {renderList()}
+        </ScrollView>
+      )}
+    </>
   );
 }
 

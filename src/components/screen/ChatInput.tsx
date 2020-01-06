@@ -1,15 +1,15 @@
+import React, { ReactElement, useCallback, useContext, useState } from 'react';
 import {
-  ActivityIndicator,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { ReactElement, useCallback, useContext, useState } from 'react';
 import { createMessage, fetchMessages, getMessage } from '../../apis/firebase';
 import { Button } from 'react-native-paper';
 import { COLORS } from './ChatStyles';
+import Loader from '../shared/Loader';
 import { theme } from '../core/theme';
 import { useAppContext } from '../../providers/AppProvider';
 
@@ -77,7 +77,7 @@ export default function Input(): ReactElement {
 
       {isLoading && (
         <View style={styles.container}>
-          <ActivityIndicator animating color={COLORS.PRIMARY} size="small" />
+          <Loader />
         </View>
       )}
     </View>

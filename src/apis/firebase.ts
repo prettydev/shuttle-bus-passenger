@@ -145,7 +145,7 @@ export const updateSeatOfTrip = (tripId, currentSeat, callback): any => {
     .then(callback);
 };
 
-/// ////////////////////////////////////////////////////////////////////////////////////////////
+/// ////////////////////////////////////////////////////////////////////
 export const createNewBooking = (doc, callback): Promise<Response> => {
   doc.updateInfo = {
     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -162,12 +162,13 @@ export const createNewBooking = (doc, callback): Promise<Response> => {
       ...doc.dropoff,
       ...doc.seat,
       ...doc.updateInfo,
+      state: 0, // 0:booked, 1:traveling, 2: completed
     })
     .then(callback);
 };
 
 export const getBookings = (callback): any => {
-  bookings.onSnapshot(callback);
+  return bookings.onSnapshot(callback);
 };
 
 /// ////////////////////////////////////////////////////////////
