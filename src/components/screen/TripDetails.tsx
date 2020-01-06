@@ -227,57 +227,48 @@ function Page(props: Props): React.ReactElement {
   };
 
   return (
-    <View
+    <Card
       style={{
-        flex: 1,
-        padding: 5,
+        padding: 20,
+        margin: 10,
+        justifyContent: 'center',
       }}
     >
       {isLoading ? (
         <ActivityIndicator size="large" />
       ) : (
-        <>
-          <Card
-            style={{
-              padding: 20,
-              margin: 5,
-              justifyContent: 'center',
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {render()}
+          <Divider />
+          <PrevNextButtons
+            prevFunc={(): void => props.navigation.navigate('TripList')}
+            nextFunc={(): void => {
+              const vehicle: Vehicle = {
+                vehicleId: details.vehicleId,
+                vehicleName: details.vehicleName,
+                vehicleRow: details.vehicleRow,
+                vehicleColumn: details.vehicleColumn,
+                vehicleCapacity: details.vehicleCapacity,
+                vehicleColor: details.vehicleColor,
+                vehicleModel: details.vehicleModel,
+                vehicleLicensePlate: details.vehicleLicensePlate,
+                vehicleAmenities: details.vehicleAmenities,
+              };
+              setVehicle(vehicle);
+              const driver: Driver = {
+                driverId: details.driverId,
+                driverName: details.driverName,
+                driverPhone: details.driverPhone,
+              };
+              setDriver(driver);
+              const newSeats: Seats = Object.assign({}, details.bookings);
+              setSeats(newSeats);
+              props.navigation.navigate('PickupMap');
             }}
-          >
-            <ScrollView showsVerticalScrollIndicator={false}>
-              {render()}
-              <Divider />
-              <PrevNextButtons
-                prevFunc={(): void => props.navigation.navigate('TripList')}
-                nextFunc={(): void => {
-                  const vehicle: Vehicle = {
-                    vehicleId: details.vehicleId,
-                    vehicleName: details.vehicleName,
-                    vehicleRow: details.vehicleRow,
-                    vehicleColumn: details.vehicleColumn,
-                    vehicleCapacity: details.vehicleCapacity,
-                    vehicleColor: details.vehicleColor,
-                    vehicleModel: details.vehicleModel,
-                    vehicleLicensePlate: details.vehicleLicensePlate,
-                    vehicleAmenities: details.vehicleAmenities,
-                  };
-                  setVehicle(vehicle);
-                  const driver: Driver = {
-                    driverId: details.driverId,
-                    driverName: details.driverName,
-                    driverPhone: details.driverPhone,
-                  };
-                  setDriver(driver);
-                  const newSeats: Seats = Object.assign({}, details.bookings);
-                  setSeats(newSeats);
-                  props.navigation.navigate('PickupMap');
-                }}
-              />
-            </ScrollView>
-          </Card>
-        </>
+          />
+        </ScrollView>
       )}
-    </View>
+    </Card>
   );
 }
 

@@ -40,6 +40,12 @@ function Page(props: Props): React.ReactElement {
     setSeats,
   } = useAppContext();
 
+  const [currentSeats, setCurrentSeats] = useState(seats);
+
+  useEffect(() => {
+    setCurrentSeats(seats);
+  }, [seats]);
+
   let rowCnt = booking.vehicle.vehicleRow.charCodeAt(0) - 64;
   let colCnt = booking.vehicle.vehicleColumn;
 
@@ -50,14 +56,8 @@ function Page(props: Props): React.ReactElement {
     colCnt = 4;
   }
 
-  console.log('rowCnt===', rowCnt);
-  console.log('colCnt===', colCnt);
-
   const rowArr = [...Array(rowCnt).keys()];
   const colArr = [...Array(colCnt).keys()];
-
-  console.log('rowArr==', rowArr);
-  console.log('colArr', colArr);
 
   const selectSeat = (r: number, c: number): void => {
     const seatId = String.fromCharCode(r + 65) + (c + 1);
@@ -75,9 +75,9 @@ function Page(props: Props): React.ReactElement {
         seatState: 1,
       };
       setSeat(currentSeat);
-      const currentSeats: Seats = Object.assign({}, seats);
-      currentSeats[seatId].seatState = 1;
-      setSeats(currentSeats);
+      const currentSeatsTmp: Seats = Object.assign({}, seats);
+      currentSeatsTmp[seatId].seatState = 1;
+      setSeats(currentSeatsTmp);
 
       updateSeatOfTrip(booking.trip.tripId, currentSeat, () => {
         console.log('You selected this seat!');

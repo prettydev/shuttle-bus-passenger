@@ -1,7 +1,8 @@
-import { ScrollView, Text } from 'react-native';
 import { DefaultNavigationProps } from '../../types';
 import PrevNextButtons from '../shared/PrevNextButtons';
 import React from 'react';
+import { ScrollView } from 'react-native';
+import { Text } from 'react-native-paper';
 
 interface Props {
   navigation: DefaultNavigationProps<'Home'>;

@@ -31,7 +31,7 @@ const AuthStack = createStackNavigator({
 
 const BookingStack = createStackNavigator({
   TripList: {
-    screen: SelectTable, // TripList,
+    screen: TripList,
     navigationOptions: ({ navigation }) => ({
       title: 'Trip list',
     }),

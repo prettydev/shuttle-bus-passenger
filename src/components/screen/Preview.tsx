@@ -1,12 +1,15 @@
+import { ActivityIndicator, Dimensions, ScrollView, View } from 'react-native';
 import {
-  ActivityIndicator,
-  Dimensions,
-  ScrollView,
+  Caption,
+  Card,
+  Divider,
+  IconButton,
+  Paragraph,
+  Subheading,
+  Surface,
   Text,
-  View,
-} from 'react-native';
-
-import { Button, Card } from 'react-native-paper';
+  Title,
+} from 'react-native-paper';
 import {
   CurrentSeat,
   DefaultNavigationProps,
@@ -79,84 +82,107 @@ function Page(props: Props): React.ReactElement {
 
   const render = (): ReactElement => {
     return (
-      <View>
-        <View>
-          <View>
-            <Text>Booking details</Text>
+      <>
+        <Title>Booking for {booking.trip.tripAlias}</Title>
 
-            <Text>Pickup</Text>
-            <Text>
-              {booking.pickup.pickupLatitude},{booking.pickup.pickupLongitude}
-            </Text>
+        <Caption>Pickup</Caption>
+        <Text>
+          {booking.pickup.pickupLatitude},{booking.pickup.pickupLongitude}
+        </Text>
 
-            <Text>Dropoff</Text>
-            <Text>
-              {booking.dropoff.dropoffLatitude},
-              {booking.dropoff.dropoffLongitude}
-            </Text>
-            <Text>Vehicle</Text>
+        <Caption>Dropoff</Caption>
+        <Text>
+          {booking.dropoff.dropoffLatitude},{booking.dropoff.dropoffLongitude}
+        </Text>
+        <Divider />
+        <Subheading>Vehicle</Subheading>
+        <View
+          style={{
+            justifyContent: 'space-around',
+            paddingLeft: 10,
+            paddingRight: 10,
+          }}
+        >
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+          >
             <View>
-              <View>
-                <View>
-                  <Text>Capacity</Text>
-                  <Text>{booking.vehicle.vehicleCapacity}</Text>
-                </View>
-                <View>
-                  <Text>Model</Text>
-                  <Text>{booking.vehicle.vehicleModel}</Text>
-                </View>
-              </View>
-
-              <View>
-                <View>
-                  <Text>Color</Text>
-                  <Text>{booking.vehicle.vehicleColor}</Text>
-                </View>
-                <View>
-                  <Text>Amenities</Text>
-                  <Text>{booking.vehicle.vehicleAmenities}</Text>
-                </View>
-              </View>
-              <Text>LicensePlate</Text>
-              <Text>{booking.vehicle.vehicleLicensePlate}</Text>
+              <Caption>Capacity</Caption>
+              <Text>{booking.vehicle.vehicleCapacity}</Text>
             </View>
-
             <View>
-              <View>
-                <Text>Driver</Text>
-                <Text>{booking.driver.driverName}</Text>
-              </View>
-              <View>
-                <Text>Seat</Text>
-                <Text>{booking.seat.seatId}</Text>
-              </View>
+              <Caption>Model</Caption>
+              <Text>{booking.vehicle.vehicleModel}</Text>
+            </View>
+            <View>
+              <Caption>Color</Caption>
+              <Text>{booking.vehicle.vehicleColor}</Text>
+            </View>
+          </View>
+
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+          >
+            <View>
+              <Caption>Amenities</Caption>
+              <Text>{booking.vehicle.vehicleAmenities}</Text>
+            </View>
+            <View>
+              <Caption>LicensePlate</Caption>
+              <Text>{booking.vehicle.vehicleLicensePlate}</Text>
             </View>
           </View>
         </View>
-      </View>
+        <Divider />
+        <Subheading>Driver</Subheading>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+          <View>
+            <Caption>DriverName</Caption>
+            <Text>{booking.driver.driverName}</Text>
+          </View>
+          <View>
+            <Caption>DriverPhone</Caption>
+            <Text>{booking.driver.driverPhone}</Text>
+          </View>
+        </View>
+        <View>
+          <Divider />
+          <Caption>Seat</Caption>
+          <Text>{booking.seat.seatId}</Text>
+        </View>
+      </>
     );
   };
 
   return (
-    <View>
-      <ScrollView showsVerticalScrollIndicator={false}>{render()}</ScrollView>
-      <PrevNextButtons
-        nextStr={'Confirm'}
-        prevFunc={(): void => props.navigation.navigate('SelectTable')}
-        nextFunc={(): void => {
-          const currentSeat: CurrentSeat = {
-            seatId: booking.seat.seatId,
-            seatState: 2,
-          };
-          setSeat(currentSeat);
-          createNewBooking(booking, (doc) => {
-            updateSeatOfTrip(booking.trip.tripId, booking.seat, () => {
-              props.navigation.navigate('Confirm');
+    <Card
+      style={{
+        padding: 20,
+        margin: 10,
+        justifyContent: 'center',
+      }}
+    >
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {render()}
+        <Divider />
+        <PrevNextButtons
+          nextStr={'Confirm'}
+          prevFunc={(): void => props.navigation.navigate('SelectTable')}
+          nextFunc={(): void => {
+            const currentSeat: CurrentSeat = {
+              seatId: booking.seat.seatId,
+              seatState: 2,
+            };
+            setSeat(currentSeat);
+            createNewBooking(booking, (doc) => {
+              updateSeatOfTrip(booking.trip.tripId, booking.seat, () => {
+                props.navigation.navigate('Confirm');
+              });
             });
-          });
-        }}
-      />
-    </View>
+          }}
+        />
+      </ScrollView>
+    </Card>
   );
 }
 
