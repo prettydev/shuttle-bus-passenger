@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import React, { ReactElement, useCallback, useContext, useState } from 'react';
-import { addMessage, createMessage, fetchMessages } from '../../apis/firebase';
+import { createMessage, fetchMessages, getMessage } from '../../apis/firebase';
 import { Button } from 'react-native-paper';
 import { COLORS } from './ChatStyles';
 

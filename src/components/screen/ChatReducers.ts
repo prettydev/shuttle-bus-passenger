@@ -9,7 +9,15 @@ export function messagesReducer(state, action): any {
         const aData = a.data();
         const bData = b.data();
 
-        return bData.created_at.seconds - aData.created_at.seconds;
+        if (aData.createdAt === null) {
+          aData.createdAt = new Date();
+        }
+
+        if (bData.createdAt === null) {
+          bData.createdAt = new Date();
+        }
+
+        return bData.createdAt.seconds - aData.createdAt.seconds;
       });
     default:
       throw new Error('Action type is not implemented!');

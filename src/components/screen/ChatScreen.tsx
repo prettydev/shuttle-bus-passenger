@@ -1,6 +1,6 @@
 import { FlatList, SafeAreaView, View } from 'react-native';
 import React, { ReactElement, useEffect, useReducer } from 'react';
-import { addMessage, createMessage, fetchMessages } from '../../apis/firebase';
+import { createMessage, fetchMessages, getMessage } from '../../apis/firebase';
 
 import Input from './ChatInput';
 import Message from './ChatMessage';
@@ -16,7 +16,7 @@ export default function HooksExample(): ReactElement {
   const [messages, dispatchMessages] = useReducer(messagesReducer, []);
 
   useEffect(function(): any {
-    addMessage((snapshot) => {
+    return getMessage((snapshot) => {
       dispatchMessages({ type: 'add', payload: snapshot.docs });
     });
   }, []);
@@ -32,7 +32,7 @@ export default function HooksExample(): ReactElement {
           }}
           renderItem={function({ item }: any): ReactElement {
             const data = item.data();
-            const side = data.user_id === uid ? 'right' : 'left';
+            const side = data.userId === uid ? 'right' : 'left';
 
             return <Message side={side} message={data.message} />;
           }}

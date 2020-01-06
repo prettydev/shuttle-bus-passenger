@@ -181,8 +181,8 @@ export async function fetchMessages(): Promise<any> {
   return results.docs;
 }
 
-export async function addMessage(callback): Promise<any> {
-  return messages.orderBy('created_at', 'desc').onSnapshot(function(snapshot) {
+export async function getMessage(callback): Promise<any> {
+  return messages.orderBy('createdAt', 'desc').onSnapshot(function(snapshot) {
     callback(snapshot);
   });
 }
