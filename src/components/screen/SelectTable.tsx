@@ -92,7 +92,8 @@ function Page(props: Props): React.ReactElement {
           }}
         >
           {colArr.map((col, j) => (
-            <Badge size={25}>{j + 1}</Badge>
+            // <Badge size={25}>{j + 1}</Badge>
+            <></>
           ))}
         </View>
         {rowArr.map((row, i) => {
@@ -110,10 +111,10 @@ function Page(props: Props): React.ReactElement {
                     key={i * colCnt + j + 1}
                     icon="seat-outline"
                     color={
-                      seats[String.fromCharCode(i + 65) + (j + 1)].seatState ===
-                      0
+                      currentSeats[String.fromCharCode(i + 65) + (j + 1)]
+                        .seatState === 0
                         ? theme.colors.icon
-                        : seats[String.fromCharCode(i + 65) + (j + 1)]
+                        : currentSeats[String.fromCharCode(i + 65) + (j + 1)]
                             .seatState === 1
                         ? theme.colors.selected
                         : theme.colors.booked

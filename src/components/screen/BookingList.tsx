@@ -44,7 +44,7 @@ interface BookingItem {
   dropoffLongitude: string;
 
   seatId: string;
-  createdAt: Datetime;
+  createdAt: object;
 
   state: number;
 }

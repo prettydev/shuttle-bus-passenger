@@ -11,10 +11,12 @@ import HelpScreen from '../screen/HelpScreen';
 import Home from '../screen/Home';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Login from '../screen/Login';
+import PaymentScreen from '../screen/PaymentScreen';
 import PhoneLogin from '../screen/PhoneLogin';
 import PickupMap from '../screen/PickupMap';
 import Preview from '../screen/Preview';
 import Register from '../screen/RegisterScreen';
+import ReviewScreen from '../screen/ReviewScreen';
 import SelectTable from '../screen/SelectTable';
 import TrackingScreen from '../screen/TrackingScreen';
 import TripDetails from '../screen/TripDetails';
@@ -87,9 +89,30 @@ const BookingStack = createStackNavigator({
   },
 });
 
-const AppStack = createBottomTabNavigator({
+const HomeStack = createStackNavigator({
   Home: {
     screen: Home,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Current Booking',
+    }),
+  },
+  Paymnet: {
+    screen: PaymentScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Payment', // `${navigation.state.params.name}'s Details'`,
+    }),
+  },
+  Review: {
+    screen: ReviewScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Give driver reviews and ratings',
+    }),
+  },
+});
+
+const AppStack = createBottomTabNavigator({
+  Home: {
+    screen: HomeStack,
     navigationOptions: {
       tabBarLabel: 'Home',
       tabBarIcon: (

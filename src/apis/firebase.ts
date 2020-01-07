@@ -171,6 +171,14 @@ export const getBookings = (callback): any => {
   return bookings.onSnapshot(callback);
 };
 
+export const getUpcomingBookings = (callback): any => {
+  return bookings.where('state', '==', 0).onSnapshot(callback);
+};
+
+export const getCurrentBookings = (callback): any => {
+  return bookings.where('state', '==', 1).onSnapshot(callback);
+};
+
 /// ////////////////////////////////////////////////////////////
 
 export async function fetchMessages(): Promise<any> {
