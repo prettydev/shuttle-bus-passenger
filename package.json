@@ -2,7 +2,7 @@
   "name": "dooboo",
   "version": "0.0.1",
   "description": "boilerplate for react-native by dooboolab!",
-  "author": "hyochan <dooboolab@gmail.com>",
+  "author": "creditcoder <creditcoder@gmail.com>",
   "private": true,
   "postinstall": "npx jetify",
   "scripts": {
