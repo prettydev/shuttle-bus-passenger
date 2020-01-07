@@ -8,15 +8,17 @@ import { messagesReducer } from './ChatReducers';
 import { chatRoomStyles as styles } from './ChatStyles';
 import { useAppContext } from '../../providers/AppProvider';
 
-export default function HooksExample(): ReactElement {
+export default function Page(props): ReactElement {
   const {
     state: { user },
   } = useAppContext();
-  const uid = user.userId;
+  const driverId = props.navigation.getParam('driverId');
+  const tripId = props.navigation.getParam('tripId');
+
   const [messages, dispatchMessages] = useReducer(messagesReducer, []);
 
   useEffect(function(): any {
-    return getMessage((snapshot) => {
+    getMessage((snapshot) => {
       dispatchMessages({ type: 'add', payload: snapshot.docs });
     });
   }, []);
@@ -32,7 +34,7 @@ export default function HooksExample(): ReactElement {
           }}
           renderItem={function({ item }: any): ReactElement {
             const data = item.data();
-            const side = data.userId === uid ? 'right' : 'left';
+            const side = data.senderId === user.userId ? 'right' : 'left';
 
             return <Message side={side} message={data.message} />;
           }}
@@ -40,7 +42,7 @@ export default function HooksExample(): ReactElement {
       </View>
 
       <View style={styles.inputContainer}>
-        <Input />
+        <Input tripId={tripId} driverId={driverId} />
       </View>
     </SafeAreaView>
   );

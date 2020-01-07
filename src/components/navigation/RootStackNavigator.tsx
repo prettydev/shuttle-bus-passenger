@@ -161,7 +161,7 @@ export default createAppContainer(
       AuthCheck: AuthCheck,
     },
     {
-      initialRouteName: 'App', // 'AuthCheck',
+      initialRouteName: 'AuthCheck',
     },
   ),
 );

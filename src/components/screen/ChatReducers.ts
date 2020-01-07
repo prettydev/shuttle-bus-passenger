@@ -10,11 +10,11 @@ export function messagesReducer(state, action): any {
         const bData = b.data();
 
         if (aData.createdAt === null) {
-          aData.createdAt = new Date();
+          return -1;
         }
 
         if (bData.createdAt === null) {
-          bData.createdAt = new Date();
+          return 0;
         }
 
         return bData.createdAt.seconds - aData.createdAt.seconds;

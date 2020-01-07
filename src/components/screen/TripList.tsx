@@ -116,6 +116,7 @@ function Page(props: Props): React.ReactElement {
                       onPress={(): void =>
                         props.navigation.navigate('ChatScreen', {
                           driverId: doc.driverId,
+                          tripId: doc.tripId,
                         })
                       }
                     />

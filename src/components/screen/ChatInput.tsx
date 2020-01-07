@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: '75%',
+    marginRight: 5,
   },
   input: {
     height: 40,
@@ -29,15 +30,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 3,
     flexDirection: 'row',
-    paddingHorizontal: 10,
   },
 });
 
-export default function Input(): ReactElement {
+export default function Input(props): ReactElement {
   const {
     state: { user },
   } = useAppContext();
-  const uid = user.userId;
 
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -45,7 +44,13 @@ export default function Input(): ReactElement {
   const handlePress = useCallback(
     function() {
       setIsLoading(true);
-      createMessage({ message, uid }).then(function() {
+      createMessage({
+        createdAt: new Date(),
+        message,
+        senderId: user.userId,
+        tripId: props.tripId,
+        receiverId: props.driverId,
+      }).then(function() {
         setIsLoading(false);
         setMessage('');
       });

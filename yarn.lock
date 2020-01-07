@@ -7174,11 +7174,6 @@ react-native-reanimated@^1.4.0:
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.4.0.tgz#7f1acbf9be08492d834f512700570978052be2f9"
   integrity sha512-tO7nSNNP+iRLVbkcSS5GXyDBb7tSI02+XuRL3/S39EAr35rnvUy2JfeLUQG+fWSObJjnMVhasUDEUwlENk8IXw==
 
-react-native-review-modal@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-review-modal/-/react-native-review-modal-0.0.1.tgz#c93ffbbfb5500f01976db29cc938b241cf66b9c6"
-  integrity sha512-eK0zjCwy6tTF9PGJ0/ui3aLpK/Vl+xVoiGmuP8bgkoq4inytP+5Lj3F8A0dOJ4oZ1zkNEgUS+/sbrm/XsESwVQ==
-
 react-native-safe-area-context@^0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-0.6.1.tgz#6886ec1769625ae1d8a0ba8921d99166a0e2e955"

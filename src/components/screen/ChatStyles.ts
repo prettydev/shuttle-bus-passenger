@@ -14,11 +14,12 @@ export const chatRoomStyles = StyleSheet.create({
   },
   inputContainer: {
     width: '100%',
-    height: 100,
+    height: 60,
     position: 'absolute',
     bottom: 0,
     paddingVertical: 10,
-    paddingLeft: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
 
     borderTopWidth: 1,
     borderTopColor: COLORS.GREY,

@@ -192,18 +192,18 @@ export async function fetchMessages(): Promise<any> {
 }
 
 export async function getMessage(callback): Promise<any> {
-  return messages.orderBy('createdAt', 'desc').onSnapshot(function(snapshot) {
+  await messages.orderBy('createdAt', 'desc').onSnapshot(function(snapshot) {
     callback(snapshot);
   });
 }
 
-export async function createMessage({ message, uid }): Promise<any> {
-  const createdAt = firebase.firestore.FieldValue.serverTimestamp();
-  await messages.add({
-    message,
-    userId: uid,
-    createdAt: createdAt,
-  });
+export async function createMessage(doc): Promise<any> {
+  try {
+    doc.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+    await messages.add(doc);
+  } catch (e) {
+    console.log('wwwww', e);
+  }
 }
 
 export async function createTripReview(doc): Promise<any> {
