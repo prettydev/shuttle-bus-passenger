@@ -181,7 +181,7 @@ function Page(props: Props): React.ReactElement {
   useEffect(() => {
     fetchCurrentBookings();
     fetchUpcomingBookings();
-  });
+  }, []);
 
   const renderUpcomingList = (): ReactElement => {
     return (
@@ -275,7 +275,7 @@ function Page(props: Props): React.ReactElement {
                       color={theme.colors.icon}
                       size={18}
                       onPress={(): void =>
-                        props.navigation.navigate('PaymentScreen', {
+                        props.navigation.navigate('Payment', {
                           driverId: doc.driverId,
                         })
                       }
@@ -285,7 +285,7 @@ function Page(props: Props): React.ReactElement {
                       color={theme.colors.icon}
                       size={18}
                       onPress={(): void =>
-                        props.navigation.navigate('ReviewScreen', {
+                        props.navigation.navigate('Review', {
                           driverId: doc.driverId,
                         })
                       }
