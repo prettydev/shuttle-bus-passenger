@@ -10,7 +10,6 @@ interface Props {
 }
 
 function Page(props: Props): React.ReactElement {
-  let timer: number;
   const {
     state: { user, booking },
   } = useAppContext();

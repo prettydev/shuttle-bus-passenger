@@ -7156,6 +7156,11 @@ react-native-paper@^3.4.0:
     color "^3.1.2"
     react-native-safe-area-view "^0.14.6"
 
+react-native-paypal@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-paypal/-/react-native-paypal-2.1.0.tgz#0c3a2e7302d7eb7a91317ccf07cc943d2e624554"
+  integrity sha512-FDua28/wR6bougGDzd4vvkS3adMkt1obPnTzdc0S1rMpDyNXmHlzKX6FYr62l1VtEowGnYNbbzqA9h1Cjbm04w==
+
 react-native-phone-call@^1.0.9:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/react-native-phone-call/-/react-native-phone-call-1.0.9.tgz#4468ec6f95856557fbff9bd69a0db04b54c35e1d"

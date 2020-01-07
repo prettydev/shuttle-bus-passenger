@@ -272,7 +272,7 @@ function Page(props: Props): React.ReactElement {
                 right={(): ReactElement => (
                   <>
                     <IconButton
-                      icon="cash"
+                      icon="contactless-payment"
                       color={theme.colors.icon}
                       size={18}
                       onPress={(): void =>
@@ -284,7 +284,7 @@ function Page(props: Props): React.ReactElement {
                       }
                     />
                     <IconButton
-                      icon="star-outline"
+                      icon="star"
                       color={theme.colors.icon}
                       size={18}
                       onPress={(): void =>

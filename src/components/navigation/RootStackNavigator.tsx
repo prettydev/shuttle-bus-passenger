@@ -96,10 +96,10 @@ const HomeStack = createStackNavigator({
       title: 'Current Booking',
     }),
   },
-  Paymnet: {
+  Payment: {
     screen: PaymentScreen,
     navigationOptions: ({ navigation }) => ({
-      title: 'Payment', // `${navigation.state.params.name}'s Details'`,
+      title: 'Payment',
     }),
   },
   Review: {
