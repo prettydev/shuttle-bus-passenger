@@ -222,6 +222,7 @@ function Page(props: Props): React.ReactElement {
                       onPress={(): void =>
                         props.navigation.navigate('ChatScreen', {
                           driverId: doc.driverId,
+                          tripId: doc.tripId,
                         })
                       }
                     />
@@ -277,6 +278,8 @@ function Page(props: Props): React.ReactElement {
                       onPress={(): void =>
                         props.navigation.navigate('Payment', {
                           driverId: doc.driverId,
+                          tripId: doc.tripId,
+                          vehicleId: doc.vehicleId,
                         })
                       }
                     />
@@ -287,6 +290,8 @@ function Page(props: Props): React.ReactElement {
                       onPress={(): void =>
                         props.navigation.navigate('Review', {
                           driverId: doc.driverId,
+                          tripId: doc.tripId,
+                          vehicleId: doc.vehicleId,
                         })
                       }
                     />

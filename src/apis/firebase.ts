@@ -45,6 +45,7 @@ const trips = firebase.firestore().collection('trips');
 const vehicles = firebase.firestore().collection('vehicles');
 const bookings = firebase.firestore().collection('bookings');
 const messages = firebase.firestore().collection('messages');
+const tripReviews = firebase.firestore().collection('trip_reviews');
 
 // auth
 export const loginWithEmail = (email: string, password: string): any => {
@@ -205,4 +206,8 @@ export async function createMessage({ message, uid }): Promise<any> {
   });
 }
 
+export async function createTripReview(doc): Promise<any> {
+  doc.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+  await tripReviews.add(doc);
+}
 /// ////////////////////////////////////////////////////////////
