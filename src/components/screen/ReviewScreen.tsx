@@ -91,7 +91,7 @@ const Page = (props): ReactElement => {
               props.navigation.navigate('Home');
             }}
           >
-            Save
+            Send
           </Button>
         </View>
       </View>
