@@ -314,7 +314,7 @@ const bookingReducer: BookingReducer = (
 const seatsReducer: SeatsReducer = (state = initialState.seats, action) => {
   switch (action.type) {
     case 'set-seats':
-      return { ...state, seats: action.payload };
+      return action.payload;
     default:
       return state;
   }

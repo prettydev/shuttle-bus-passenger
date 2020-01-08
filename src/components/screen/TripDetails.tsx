@@ -234,15 +234,14 @@ function Page(props: Props): React.ReactElement {
         padding: 20,
         margin: 10,
         justifyContent: 'center',
+        height: '97%',
       }}
     >
       {isLoading ? (
         <Loader />
       ) : (
         <>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            {render()}
-          </ScrollView>
+          <ScrollView style={{ height: '97%' }}>{render()}</ScrollView>
           <PrevNextButtons
             prevFunc={(): void => props.navigation.navigate('TripList')}
             nextFunc={(): void => {

@@ -6,6 +6,7 @@ import {
   List,
   Paragraph,
   Surface,
+  Text,
   Title,
 } from 'react-native-paper';
 import { DefaultNavigationProps, Trip } from '../../types';
@@ -119,6 +120,19 @@ function Page(props: Props): React.ReactElement {
   const renderList = (): ReactElement => {
     return (
       <View style={{ flex: 1, padding: 5 }}>
+        {bookings === undefined ||
+          (bookings.length === 0 && (
+            <Card
+              style={{
+                padding: 25,
+                margin: 5,
+                justifyContent: 'center',
+              }}
+            >
+              <Text>No rides.</Text>
+            </Card>
+          ))}
+
         {bookings &&
           bookings.map((doc, i) => (
             <Card

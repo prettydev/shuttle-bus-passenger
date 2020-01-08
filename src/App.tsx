@@ -11,6 +11,9 @@ function ProviderWrapper(): React.ReactElement {
   useEffect(() => {
     SplashScreen.hide();
   }, []);
+
+  console.disableYellowBox = true;
+
   return (
     <RootProvider>
       <App />

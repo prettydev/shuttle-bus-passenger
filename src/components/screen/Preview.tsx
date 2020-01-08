@@ -177,9 +177,10 @@ function Page(props: Props): React.ReactElement {
           setSeat(currentSeat);
           createNewBooking(booking, (doc) => {
             updateSeatOfTrip(booking.trip.tripId, booking.seat, () => {
-              props.navigation.navigate('Confirm');
+              console.log('booking success');
             });
           });
+          props.navigation.navigate('Confirm');
         }}
       />
     </>

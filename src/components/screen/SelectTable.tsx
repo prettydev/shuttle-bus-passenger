@@ -35,12 +35,6 @@ function Page(props: Props): React.ReactElement {
     setSeats,
   } = useAppContext();
 
-  const [currentSeats, setCurrentSeats] = useState(seats);
-
-  useEffect(() => {
-    setCurrentSeats(seats);
-  }, [seats]);
-
   let rowCnt = booking.vehicle.vehicleRow.charCodeAt(0) - 64;
   let colCnt = booking.vehicle.vehicleColumn;
 
@@ -58,84 +52,93 @@ function Page(props: Props): React.ReactElement {
     const seatId = String.fromCharCode(r + 65) + (c + 1);
     const s = seats[seatId].seatState;
 
-    console.log('r, c, s, seatId', r, c, s, seatId);
-
-    if (s === 1) {
-      console.log('Someone selected this seat!');
-    } else if (s === 2) {
-      console.log('Someone booked this seat!');
-    } else {
-      const currentSeat: CurrentSeat = {
-        seatId: seatId,
-        seatState: 1,
-      };
-      setSeat(currentSeat);
-      const currentSeatsTmp: Seats = Object.assign({}, seats);
-      currentSeatsTmp[seatId].seatState = 1;
-      setSeats(currentSeatsTmp);
-
-      updateSeatOfTrip(booking.trip.tripId, currentSeat, () => {
-        console.log('You selected this seat!');
-      });
+    if (s === 1 || s === 2) {
+      return;
     }
+
+    const currentSeat: CurrentSeat = {
+      seatId,
+      seatState: 1,
+    };
+    setSeat(currentSeat);
+
+    seats[seatId].seatState = 1;
+
+    console.log('7777777777777777777', seats);
+
+    updateSeatOfTrip(booking.trip.tripId, currentSeat, () => {
+      console.log('You selected this seat!');
+    });
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <Card
+      style={{
+        padding: 20,
+        margin: 10,
+        justifyContent: 'center',
+        height: '97%',
+      }}
+    >
+      <ScrollView style={{ height: '97%' }}>
         <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            width: '52%',
-            paddingLeft: 40,
-          }}
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
         >
-          {colArr.map((col, j) => (
-            // <Badge size={25}>{j + 1}</Badge>
-            <></>
-          ))}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              width: '52%',
+              paddingLeft: 40,
+            }}
+          >
+            {colArr.map((col, j) => (
+              // <Badge size={25}>{j + 1}</Badge>
+              <></>
+            ))}
+          </View>
+          {rowArr.map((row, i) => {
+            return (
+              <View
+                key={i}
+                style={{ flexDirection: 'row', alignItems: 'center' }}
+              >
+                <Badge size={25} style={{ marginBottom: 10, marginRight: 20 }}>
+                  {String.fromCharCode(i + 65)}
+                </Badge>
+                {colArr.map((col, j) => {
+                  return (
+                    <>
+                      <IconButton
+                        key={i * colCnt + j + 1}
+                        icon="seat-outline"
+                        color={
+                          seats[String.fromCharCode(i + 65) + (j + 1)]
+                            .seatState === 0
+                            ? theme.colors.icon
+                            : seats[String.fromCharCode(i + 65) + (j + 1)]
+                                .seatState === 1
+                            ? theme.colors.selected
+                            : theme.colors.booked
+                        }
+                        size={25}
+                        onPress={(): void => selectSeat(i, j)}
+                      >
+                        {String.fromCharCode(i + 65)}
+                      </IconButton>
+                    </>
+                  );
+                })}
+              </View>
+            );
+          })}
         </View>
-        {rowArr.map((row, i) => {
-          return (
-            <View
-              key={i}
-              style={{ flexDirection: 'row', alignItems: 'center' }}
-            >
-              <Badge size={25} style={{ marginBottom: 10, marginRight: 20 }}>
-                {String.fromCharCode(i + 65)}
-              </Badge>
-              {colArr.map((col, j) => {
-                return (
-                  <IconButton
-                    key={i * colCnt + j + 1}
-                    icon="seat-outline"
-                    color={
-                      currentSeats[String.fromCharCode(i + 65) + (j + 1)]
-                        .seatState === 0
-                        ? theme.colors.icon
-                        : currentSeats[String.fromCharCode(i + 65) + (j + 1)]
-                            .seatState === 1
-                        ? theme.colors.selected
-                        : theme.colors.booked
-                    }
-                    size={25}
-                    onPress={(): void => selectSeat(i, j)}
-                  >
-                    {String.fromCharCode(i + 65)}
-                  </IconButton>
-                );
-              })}
-            </View>
-          );
-        })}
-      </View>
-      <Divider />
+      </ScrollView>
       <PrevNextButtons
         prevFunc={(): void => props.navigation.navigate('DropoffMap')}
         nextFunc={(): void => props.navigation.navigate('Preview')}
       />
-    </ScrollView>
+    </Card>
   );
 }
 

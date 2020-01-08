@@ -186,6 +186,19 @@ function Page(props: Props): React.ReactElement {
   const renderUpcomingList = (): ReactElement => {
     return (
       <View style={{ flex: 1, padding: 5 }}>
+        {upcomingBookings === undefined ||
+          (upcomingBookings.length === 0 && (
+            <Card
+              style={{
+                padding: 25,
+                margin: 5,
+                justifyContent: 'center',
+              }}
+            >
+              <Text>No upcoming bookings.</Text>
+            </Card>
+          ))}
+
         {upcomingBookings &&
           upcomingBookings.map((doc, i) => (
             <Card
@@ -248,6 +261,19 @@ function Page(props: Props): React.ReactElement {
   const renderCurrentList = (): ReactElement => {
     return (
       <View style={{ flex: 1, padding: 5 }}>
+        {currentBookings === undefined ||
+          (currentBookings.length === 0 && (
+            <Card
+              style={{
+                padding: 25,
+                margin: 5,
+                justifyContent: 'center',
+              }}
+            >
+              <Text>No current booking.</Text>
+            </Card>
+          ))}
+
         {currentBookings &&
           currentBookings.map((doc, i) => (
             <Card
