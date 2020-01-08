@@ -8,7 +8,7 @@ import {
 } from 'react-native-paper';
 import {
   CurrentSeat,
-  DefaultNavigationProps,
+  DefaultBookingNavigationProps,
   Driver,
   Seat,
   Seats,
@@ -23,7 +23,7 @@ import { updateSeatOfTrip } from '../../apis/firebase';
 import { useAppContext } from '../../providers/AppProvider';
 
 interface Props {
-  navigation: DefaultNavigationProps<'Home'>;
+  navigation: DefaultBookingNavigationProps<'TripList'>;
 }
 
 const { width } = Dimensions.get('screen');

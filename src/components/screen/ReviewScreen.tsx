@@ -2,12 +2,21 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { Button } from 'react-native-paper';
 import Modal from 'react-native-modal';
-import PropTypes from 'prop-types';
+import { NavigationStackProp } from 'react-navigation-stack';
+// import { StackNavigationProp } from '@react-navigation/stack';
 import StarRating from 'react-native-star-rating';
 import TextArea from '@freakycoder/react-native-text-area';
 import { createTripReview } from '../../apis/firebase';
 import { theme } from '../core/theme';
 import { useAppContext } from '../../providers/AppProvider';
+
+type Props = {
+  navigation: NavigationStackProp<{
+    driverId: string;
+    tripId: string;
+    vehicleId: string;
+  }>;
+};
 
 const Page = (props): ReactElement => {
   const {

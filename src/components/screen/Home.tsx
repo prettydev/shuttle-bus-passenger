@@ -1,28 +1,16 @@
-import {
-  Avatar,
-  Button,
-  Card,
-  IconButton,
-  List,
-  Paragraph,
-  Surface,
-  Text,
-  Title,
-} from 'react-native-paper';
-import { DefaultNavigationProps, Trip } from '../../types';
-import { Dimensions, ScrollView, View } from 'react-native';
+import { Card, IconButton, List, Text } from 'react-native-paper';
 import React, { ReactElement, useEffect, useState } from 'react';
+import { ScrollView, View } from 'react-native';
 import { getCurrentBookings, getUpcomingBookings } from '../../apis/firebase';
+import { DefaultHomeNavigationProps } from '../../types';
 import Loader from '../shared/Loader';
 import { phone } from '../../apis/phone';
 import { theme } from '../core/theme';
-import { useAppContext } from '../../providers/AppProvider';
 
 interface Props {
-  navigation: DefaultNavigationProps<'Home'>;
+  navigation: DefaultHomeNavigationProps<'Home'>;
 }
 
-const { width } = Dimensions.get('screen');
 interface BookingItem {
   key: string;
 
@@ -51,8 +39,6 @@ interface BookingItem {
 }
 
 function Page(props: Props): React.ReactElement {
-  const { setTrip } = useAppContext();
-
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [currentBookings, setCurrentBookings] = useState<BookingItem[]>();

@@ -10,7 +10,7 @@ import {
   Title,
 } from 'react-native-paper';
 import {
-  DefaultNavigationProps,
+  DefaultBookingNavigationProps,
   Driver,
   Seats,
   Vehicle,
@@ -26,7 +26,7 @@ import { theme } from '../core/theme';
 import { useAppContext } from '../../providers/AppProvider';
 
 interface Props {
-  navigation: DefaultNavigationProps<'Home'>;
+  navigation: DefaultBookingNavigationProps<'TripList'>;
 }
 
 const { width } = Dimensions.get('screen');

@@ -12,9 +12,14 @@ import {
 } from 'react-native-paper';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import React, { ReactElement, useState } from 'react';
+import { DefaultHelpNavigationProps } from '../../types';
 import { theme } from '../core/theme';
 
-const HelpScreen = (): ReactElement => {
+interface Props {
+  navigation: DefaultHelpNavigationProps<'Help'>;
+}
+
+const HelpScreen = (props: Props): ReactElement => {
   const [view, setView] = useState('about');
   return (
     <Card

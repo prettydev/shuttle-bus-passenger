@@ -1,7 +1,5 @@
-import { DefaultNavigationProps, Rider, User } from '../../types';
 import React, { ReactElement, memo, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
 import {
   cpasswordValidator,
   emailValidator,
@@ -9,15 +7,10 @@ import {
   passwordValidator,
   phoneValidator,
 } from '../core/utils';
-import {
-  createNewRider,
-  getRiderDetails,
-  loginWithEmail,
-  signupWithEmail,
-} from '../../apis/firebase';
-import BackButton from '../shared/BackButton';
+import { createNewRider, signupWithEmail } from '../../apis/firebase';
 import Background from '../shared/Background';
 import Button from '../shared/Button';
+import { DefaultAuthNavigationProps } from '../../types';
 import Header from '../shared/Header';
 import Logo from '../shared/Logo';
 import TextInput from '../shared/TextInput';
@@ -25,7 +18,7 @@ import TextInput from '../shared/TextInput';
 import { theme } from '../core/theme';
 
 interface Props {
-  navigation: DefaultNavigationProps<'App'>;
+  navigation: DefaultAuthNavigationProps<'Login'>;
 }
 
 const styles = StyleSheet.create({

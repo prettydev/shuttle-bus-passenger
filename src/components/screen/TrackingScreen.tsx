@@ -1,11 +1,12 @@
-import { DefaultNavigationProps, Pickup } from '../../types';
+import { DefaultBookingNavigationProps, Pickup } from '../../types';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import React, { useEffect, useState } from 'react';
 import Geolocation from 'react-native-geolocation-service';
+import { NavigationStackProp } from 'react-navigation-stack';
 import Styled from 'styled-components/native';
 
 interface Props {
-  navigation: DefaultNavigationProps<'Home'>;
+  navigation: NavigationStackProp<{ driverId: string }>;
 }
 
 const Container = Styled.View`
@@ -28,7 +29,7 @@ const initialLoc = {
 function Page(props: Props): React.ReactElement {
   // const driverId = props.navigation.getParam('driverId');
   const [location, setLocation] = useState<ILocation | undefined>(initialLoc);
-
+  const driverId = props.navigation.getParam('driverId');
   useEffect(() => {
     Geolocation.getCurrentPosition(
       // get location of bus from firebase

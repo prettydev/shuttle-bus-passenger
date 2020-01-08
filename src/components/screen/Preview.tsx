@@ -11,7 +11,7 @@ import {
 } from 'react-native-paper';
 import {
   CurrentSeat,
-  DefaultNavigationProps,
+  DefaultBookingNavigationProps,
   Driver,
   Seats,
   Vehicle,
@@ -25,7 +25,7 @@ import PrevNextButtons from '../shared/PrevNextButtons';
 import { useAppContext } from '../../providers/AppProvider';
 
 interface Props {
-  navigation: DefaultNavigationProps<'Home'>;
+  navigation: DefaultBookingNavigationProps<'TripList'>;
 }
 
 const { width } = Dimensions.get('screen');

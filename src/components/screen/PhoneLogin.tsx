@@ -1,4 +1,4 @@
-import { DefaultNavigationProps, Rider, User } from '../../types';
+import { DefaultAuthNavigationProps, Rider, User } from '../../types';
 import React, { ReactElement, memo, useState } from 'react';
 import {
   SafeAreaView,
@@ -23,7 +23,7 @@ import Logo from '../shared/Logo';
 import { theme } from '../core/theme';
 import { useAppContext } from '../../providers/AppProvider';
 interface Props {
-  navigation: DefaultNavigationProps<'App'>;
+  navigation: DefaultAuthNavigationProps<'Login'>;
 }
 
 const styles = StyleSheet.create({
@@ -89,9 +89,9 @@ function PhoneLoginScreen(props: Props): ReactElement {
     // Request for OTP verification
     if (verificationCode.length === 6) {
       try {
-        if (confirmResult !== null) {
-          await confirmResult.confirm(verificationCode);
-        } // User entered code
+        // if (confirmResult !== null) {
+        //   await confirmResult.confirm(verificationCode);
+        // } // User entered code
         // Successful login - onAuthStateChanged is triggered
       } catch (e) {
         console.log('verify exception', e); // Invalid code

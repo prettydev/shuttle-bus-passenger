@@ -1,24 +1,17 @@
-import { Colors, IconButton } from 'react-native-paper';
-import { DefaultNavigationProps, Rider, User } from '../../types';
+import { DefaultAuthNavigationProps, Rider, User } from '../../types';
 import React, { ReactElement, memo, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { emailValidator, passwordValidator } from '../core/utils';
-import {
-  getRiderDetails,
-  loginWithEmail,
-  signupWithEmail,
-} from '../../apis/firebase';
-import BackButton from '../shared/BackButton';
+import { getRiderDetails, loginWithEmail } from '../../apis/firebase';
 import Background from '../shared/Background';
 import Button from '../shared/Button';
 import Header from '../shared/Header';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import Logo from '../shared/Logo';
 import TextInput from '../shared/TextInput';
 import { theme } from '../core/theme';
 import { useAppContext } from '../../providers/AppProvider';
 interface Props {
-  navigation: DefaultNavigationProps<'App'>;
+  navigation: DefaultAuthNavigationProps<'Login'>;
 }
 
 const styles = StyleSheet.create({
@@ -40,13 +33,8 @@ const styles = StyleSheet.create({
   },
 });
 
-// const LoginScreen = ({ navigation }: Props) => {
 function LoginScreen(props: Props): ReactElement {
-  const {
-    state: { user, booking },
-    setUser,
-    setRider,
-  } = useAppContext();
+  const { setUser, setRider } = useAppContext();
 
   const [email, setEmail] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
@@ -81,15 +69,11 @@ function LoginScreen(props: Props): ReactElement {
               riderPhone: res.data().phone,
             };
             setRider(rider);
-
-            props.navigation.navigate('App');
-          } else {
-            props.navigation.navigate('Auth');
           }
+          props.navigation.navigate('App');
         });
       }
     } catch (e) {
-      console.log(e.message);
       setErrorMsg(e.message);
     }
   }

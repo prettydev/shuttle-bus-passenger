@@ -1,14 +1,31 @@
+import {
+  DefaultBookingNavigationProps,
+  DefaultHistoryNavigationProps,
+  DefaultHomeNavigationProps,
+} from '../../types';
 import { FlatList, SafeAreaView, View } from 'react-native';
 import React, { ReactElement, useEffect, useReducer } from 'react';
 import { createMessage, fetchMessages, getMessage } from '../../apis/firebase';
-
 import Input from './ChatInput';
 import Message from './ChatMessage';
+import { NavigationStackProp } from 'react-navigation-stack';
+// import { StackNavigationProp } from '@react-navigation/stack';
 import { messagesReducer } from './ChatReducers';
 import { chatRoomStyles as styles } from './ChatStyles';
 import { useAppContext } from '../../providers/AppProvider';
 
-export default function Page(props): ReactElement {
+// interface Props {
+//   navigation:
+//     | DefaultHomeNavigationProps<'Home'>
+//     | DefaultHistoryNavigationProps<'History'>
+//     | DefaultBookingNavigationProps<'TripList'>;
+// }
+
+type Props = {
+  navigation: NavigationStackProp<{ driverId: string; tripId: string }>;
+};
+
+export default function Page(props: Props): ReactElement {
   const {
     state: { user },
   } = useAppContext();

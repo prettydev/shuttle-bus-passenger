@@ -1,24 +1,17 @@
-import { DefaultNavigationProps, Rider, User } from '../../types';
 import React, { ReactElement, memo, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-import {
-  createNewRider,
-  getRiderDetails,
-  loginWithEmail,
-  passwordReset,
-  signupWithEmail,
-} from '../../apis/firebase';
-import BackButton from '../shared/BackButton';
 import Background from '../shared/Background';
 import Button from '../shared/Button';
+import { DefaultAuthNavigationProps } from '../../types';
 import Header from '../shared/Header';
 import Logo from '../shared/Logo';
 import TextInput from '../shared/TextInput';
 import { emailValidator } from '../core/utils';
+import { passwordReset } from '../../apis/firebase';
 import { theme } from '../core/theme';
 
 interface Props {
-  navigation: DefaultNavigationProps<'App'>;
+  navigation: DefaultAuthNavigationProps<'Login'>;
 }
 
 const styles = StyleSheet.create({
@@ -49,7 +42,6 @@ const ForgotPasswordScreen = ({ navigation }: Props): ReactElement => {
       await passwordReset(email.value);
       navigation.navigate('Login');
     } catch (error) {
-      console.log('reset error', error);
     } finally {
     }
   }

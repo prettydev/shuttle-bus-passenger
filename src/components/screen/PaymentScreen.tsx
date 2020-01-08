@@ -1,18 +1,32 @@
 import { Card, Text } from 'react-native-paper';
-import { DefaultNavigationProps, User } from '../../types';
+import { DefaultHomeNavigationProps, User } from '../../types';
 import React, { ReactElement, useEffect, useState } from 'react';
+import { NavigationStackProp } from 'react-navigation-stack';
+// import { StackNavigationProp } from '@react-navigation/stack';
 import { View } from 'react-native';
 import { requestOneTimePayment } from 'react-native-paypal';
 import { useAppContext } from '../../providers/AppProvider';
 
-interface Props {
-  navigation: DefaultNavigationProps<'Home'>;
-}
+// interface Props {
+//   navigation: DefaultHomeNavigationProps<'Home'>;
+// }
+
+type Props = {
+  navigation: NavigationStackProp<{
+    driverId: string;
+    tripId: string;
+    vehicleId: string;
+  }>;
+};
 
 function Page(props: Props): ReactElement {
   const {
     state: { user, booking },
   } = useAppContext();
+
+  const driverId = props.navigation.getParam('driverId');
+  const tripId = props.navigation.getParam('tripId');
+  const vehicleId = props.navigation.getParam('vehicleId');
 
   // const {
   //   nonce,

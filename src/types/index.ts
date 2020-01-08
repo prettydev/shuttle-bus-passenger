@@ -195,43 +195,78 @@ export const initSeats = {
   N4: initSeat,
 };
 
-type StackParamList = {
-  default: undefined;
-  App: undefined;
-  Auth: undefined;
-  AuthCheck: undefined;
-  Home: undefined;
-  Booking: undefined;
-  History: undefined;
+type StackAuthParamList = {
   Login: undefined;
   PhoneLogin: undefined;
   Register: undefined;
   ForgotPassword: undefined;
-  TripList: undefined;
-  TripDetails: undefined;
-  ChatScreen: { driverId: string; tripId: string };
+  App: undefined;
+};
+
+type StackHomeParamList = {
+  Home: undefined;
+  Booking: undefined;
+
   Payment: { driverId: string; tripId: string; vehicleId: string };
   Review: { driverId: string; tripId: string; vehicleId: string };
+  ChatScreen: { driverId: string; tripId: string };
   TrackingScreen: { driverId: string };
+};
+
+type StackBookingParamList = {
+  TripList: undefined;
+  TripDetails: undefined;
   PickupMap: undefined;
   DropoffMap: undefined;
   SelectTable: undefined;
   Preview: undefined;
   Confirm: undefined;
+
+  Payment: { driverId: string; tripId: string; vehicleId: string };
+  Review: { driverId: string; tripId: string; vehicleId: string };
+  ChatScreen: { driverId: string; tripId: string };
+  TrackingScreen: { driverId: string };
+};
+
+type StackHistoryParamList = {
+  History: undefined;
+  ChatScreen: { driverId: string; tripId: string };
+  TrackingScreen: { driverId: string };
+};
+
+type StackHelpParamList = {
+  Help: undefined;
 };
 
 type StackRootParamList = {
   App: undefined;
   Auth: undefined;
+  AuthCheck: undefined;
 };
-
-export type DefaultNavigationProps<
-  T extends keyof StackParamList
-> = StackNavigationProp<StackParamList, T>;
 
 export type DefaultRootNavigationProps<
   T extends keyof StackRootParamList
 > = StackNavigationProp<StackRootParamList, T>;
+
+export type DefaultAuthNavigationProps<
+  T extends keyof StackAuthParamList
+> = StackNavigationProp<StackAuthParamList, T>;
+
+export type DefaultHomeNavigationProps<
+  T extends keyof StackHomeParamList
+> = StackNavigationProp<StackHomeParamList, T>;
+
+export type DefaultBookingNavigationProps<
+  T extends keyof StackBookingParamList
+> = StackNavigationProp<StackBookingParamList, T>;
+
+export type DefaultHistoryNavigationProps<
+  T extends keyof StackHistoryParamList
+> = StackNavigationProp<StackHistoryParamList, T>;
+
+export type DefaultHelpNavigationProps<
+  T extends keyof StackHelpParamList
+> = StackNavigationProp<StackHelpParamList, T>;
 
 interface IconProps {
   style?: StyleProp<TextStyle>;

@@ -3,7 +3,7 @@ import 'firebase/firestore';
 import * as firebase from 'firebase';
 import {
   Booking,
-  DefaultNavigationProps,
+  DefaultBookingNavigationProps,
   Driver,
   Dropoff,
   Pickup,
@@ -178,6 +178,10 @@ export const getUpcomingBookings = (callback): any => {
 
 export const getCurrentBookings = (callback): any => {
   return bookings.where('state', '==', 1).onSnapshot(callback);
+};
+
+export const getCompletedBookings = (callback): any => {
+  return bookings.where('state', '==', 2).onSnapshot(callback);
 };
 
 /// ////////////////////////////////////////////////////////////

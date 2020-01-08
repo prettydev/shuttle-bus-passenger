@@ -1,11 +1,11 @@
 import { Card, Text } from 'react-native-paper';
-import { DefaultNavigationProps } from '../../types';
+import { DefaultBookingNavigationProps } from '../../types';
 import PrevNextButtons from '../shared/PrevNextButtons';
 import React from 'react';
 import { ScrollView } from 'react-native';
 
 interface Props {
-  navigation: DefaultNavigationProps<'Home'>;
+  navigation: DefaultBookingNavigationProps<'TripList'>;
 }
 
 function Page(props: Props): React.ReactElement {

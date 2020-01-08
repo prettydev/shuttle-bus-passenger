@@ -1,4 +1,4 @@
-import { DefaultNavigationProps, Dropoff } from '../../types';
+import { DefaultBookingNavigationProps, Dropoff } from '../../types';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import React, { useEffect, useState } from 'react';
 import Geolocation from 'react-native-geolocation-service';
@@ -7,7 +7,7 @@ import Styled from 'styled-components/native';
 import { useAppContext } from '../../providers/AppProvider';
 
 interface Props {
-  navigation: DefaultNavigationProps<'Home'>;
+  navigation: DefaultBookingNavigationProps<'TripList'>;
 }
 
 const Container = Styled.View`

@@ -9,17 +9,17 @@ import {
   Text,
   Title,
 } from 'react-native-paper';
-import { DefaultNavigationProps, Trip } from '../../types';
+import { DefaultHistoryNavigationProps, Trip } from '../../types';
 import { Dimensions, ScrollView, View } from 'react-native';
 import React, { ReactElement, useEffect, useState } from 'react';
 import Loader from '../shared/Loader';
-import { getBookings } from '../../apis/firebase';
+import { getCompletedBookings } from '../../apis/firebase';
 import { phone } from '../../apis/phone';
 import { theme } from '../core/theme';
 import { useAppContext } from '../../providers/AppProvider';
 
 interface Props {
-  navigation: DefaultNavigationProps<'Home'>;
+  navigation: DefaultHistoryNavigationProps<'History'>;
 }
 
 const { width } = Dimensions.get('screen');
@@ -58,7 +58,7 @@ function Page(props: Props): React.ReactElement {
   const [bookings, setBookings] = useState<BookingItem[]>();
 
   useEffect(() => {
-    getBookings((res) => {
+    getCompletedBookings((res) => {
       const list: BookingItem[] = [];
       res.forEach((doc) => {
         const {

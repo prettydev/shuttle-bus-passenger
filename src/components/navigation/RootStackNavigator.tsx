@@ -108,10 +108,43 @@ const HomeStack = createStackNavigator({
       title: 'Give driver reviews and ratings',
     }),
   },
+  ChatScreen: {
+    screen: ChatScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Chat with driver',
+    }),
+  },
+  TrackingScreen: {
+    screen: TrackingScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Tracking a bus',
+    }),
+  },
+});
+
+const HistoryStack = createStackNavigator({
+  History: {
+    screen: BookingList,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Total bookings',
+    }),
+  },
+  ChatScreen: {
+    screen: ChatScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Chat with driver',
+    }),
+  },
+  TrackingScreen: {
+    screen: TrackingScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Tracking a bus',
+    }),
+  },
 });
 
 const AppStack = createBottomTabNavigator({
-  Home: {
+  HomeStack: {
     screen: HomeStack,
     navigationOptions: {
       tabBarLabel: 'Home',
@@ -120,7 +153,7 @@ const AppStack = createBottomTabNavigator({
       ),
     },
   },
-  Booking: {
+  BookingStack: {
     screen: BookingStack,
     navigationOptions: {
       tabBarLabel: 'Booking',
@@ -130,7 +163,7 @@ const AppStack = createBottomTabNavigator({
     },
   },
   History: {
-    screen: BookingList,
+    screen: HistoryStack,
     navigationOptions: {
       tabBarLabel: 'My rides',
       tabBarIcon: (

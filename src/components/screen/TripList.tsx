@@ -8,7 +8,7 @@ import {
   Surface,
   Title,
 } from 'react-native-paper';
-import { DefaultNavigationProps, Trip } from '../../types';
+import { DefaultBookingNavigationProps, Trip } from '../../types';
 import { Dimensions, ScrollView, View } from 'react-native';
 import React, { ReactElement, useEffect, useState } from 'react';
 import Loader from '../shared/Loader';
@@ -18,7 +18,7 @@ import { theme } from '../core/theme';
 import { useAppContext } from '../../providers/AppProvider';
 
 interface Props {
-  navigation: DefaultNavigationProps<'Home'>;
+  navigation: DefaultBookingNavigationProps<'TripList'>;
 }
 
 const { width } = Dimensions.get('screen');
