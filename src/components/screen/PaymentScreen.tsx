@@ -1,9 +1,13 @@
 import { Card, Text } from 'react-native-paper';
+import {
+  CreditCardInput,
+  LiteCreditCardInput,
+} from 'react-native-credit-card-input';
 import { DefaultHomeNavigationProps, User } from '../../types';
 import React, { ReactElement, useEffect, useState } from 'react';
+import { Switch, View } from 'react-native';
 import { NavigationStackProp } from 'react-navigation-stack';
 // import { StackNavigationProp } from '@react-navigation/stack';
-import { View } from 'react-native';
 import { requestOneTimePayment } from 'react-native-paypal';
 import { useAppContext } from '../../providers/AppProvider';
 
@@ -47,9 +51,41 @@ function Page(props: Props): ReactElement {
   //   intent: 'authorize',
   // });
 
+  const [useLiteCreditCardInput, setUseLiteCreditCardInput] = useState(false);
+
+  const onChange = (formData): any =>
+    console.log(JSON.stringify(formData, null, ' '));
+  const onFocus = (field): any => console.log('focusing', field);
+
   return (
     <View>
-      <Text>PaymentScreen</Text>
+      <Switch
+        onValueChange={(value: any): any => setUseLiteCreditCardInput(value)}
+        value={useLiteCreditCardInput}
+      />
+
+      {useLiteCreditCardInput ? (
+        <LiteCreditCardInput
+          autoFocus
+          validColor={'black'}
+          invalidColor={'red'}
+          placeholderColor={'darkgray'}
+          onFocus={onFocus}
+          onChange={onChange}
+        />
+      ) : (
+        <CreditCardInput
+          autoFocus
+          // requiresName
+          requiresCVC
+          requiresPostalCode
+          validColor={'black'}
+          invalidColor={'red'}
+          placeholderColor={'darkgray'}
+          onFocus={onFocus}
+          onChange={onChange}
+        />
+      )}
     </View>
   );
 }

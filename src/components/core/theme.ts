@@ -9,6 +9,6 @@ export const theme = {
     error: '#f13a59',
     selected: '#069ccd',
     booked: 'rgb(29,211,168)',
-    icon: '#ff4848',
+    icon: '#e91e63', // '#ff4848',
   },
 };
