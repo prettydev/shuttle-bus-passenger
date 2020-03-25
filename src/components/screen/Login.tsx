@@ -53,8 +53,18 @@ function LoginScreen(props: Props): ReactElement {
     try {
       const userCredential = await loginWithEmail(email.value, password.value);
 
+      console.log(
+        '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%login error, ',
+        userCredential,
+      );
+
       if (userCredential.user) {
         await getRiderDetails(userCredential.user.uid, (res) => {
+          console.log(
+            '!!!!!!!!!!!!!!!!!!!!get rider details data, ',
+            res.data(),
+          );
+
           if (res.data()) {
             const user: User = {
               userId: res.id,
@@ -74,6 +84,7 @@ function LoginScreen(props: Props): ReactElement {
         });
       }
     } catch (e) {
+      console.log('#####################################login error, ', e);
       setErrorMsg(e.message);
     }
   }
